@@ -643,10 +643,11 @@ init();
     return window.escapeSimulatorHtml ? window.escapeSimulatorHtml(value ?? '') : String(value ?? '');
   }
 
-  function formatSavedAt(savedAt){
+  function formatSavedAt(savedAt, savedAtMs){
     try{
       if(savedAt?.toDate) return savedAt.toDate().toLocaleString();
       if(typeof savedAt === 'string') return new Date(savedAt).toLocaleString();
+      if(typeof savedAtMs === 'number') return new Date(savedAtMs).toLocaleString();
     }catch{}
     return 'Just now';
   }
@@ -683,6 +684,7 @@ init();
       await addDoc(collection(db, 'snapshots'), {
         name,
         savedAt: serverTimestamp(),
+        savedAtMs: Date.now(),
         champion,
         runnerUp,
         qualifiedThirdGroups: snapshotData.qualifiedThirdGroups || '',
@@ -695,8 +697,9 @@ init();
       await loadPublicSnapshots();
     }catch(error){
       console.error(error);
-      setFirebaseStatus('Save failed: '+error.message, 'error');
-      alert('Public save failed. Check Firebase setup and Firestore rules.');
+      const code = error.code ? error.code + ': ' : '';
+      setFirebaseStatus('Save failed: '+code+error.message, 'error');
+      alert('Public save failed. '+code+error.message);
     }
   }
 
@@ -704,7 +707,7 @@ init();
     try{
       if(!db) throw new Error('Firestore is not ready.');
       if(listEl) listEl.innerHTML='<div class="small">Loading public snapshots...</div>';
-      const q = query(collection(db, 'snapshots'), orderBy('savedAt', 'desc'), limit(60));
+      const q = query(collection(db, 'snapshots'), orderBy('savedAtMs', 'desc'), limit(60));
       const result = await getDocs(q);
       publicSnapshotCache.clear();
       const cards=[];
@@ -718,7 +721,7 @@ init();
               Champion: ${safeText(data.champion || 'Not selected')}<br>
               Runner-up: ${safeText(data.runnerUp || 'Not selected')}<br>
               Third groups: ${safeText(data.qualifiedThirdGroups || '-')}<br>
-              Saved: ${safeText(formatSavedAt(data.savedAt))}
+              Saved: ${safeText(formatSavedAt(data.savedAt, data.savedAtMs))}
             </div>
             <button data-load-public="${doc.id}">View Snapshot</button>
           </div>`);
