@@ -27,6 +27,8 @@
     .records{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:1000px){.records{grid-template-columns:1fr}}.record-list{max-height:560px;overflow:auto;display:grid;gap:10px}.record{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.035);padding:12px}.record strong{display:block;margin-bottom:4px}.logline{font-family:Consolas,monospace;font-size:12px;color:#dbe6ff;background:#0a1222;border:1px solid #1d2e4e;border-radius:10px;padding:8px;white-space:pre-wrap}
     .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:900px){.two-col{grid-template-columns:1fr}}.fieldgrid{display:grid;grid-template-columns:repeat(3,minmax(120px,1fr));gap:10px}.fieldgrid label{font-size:12px;color:var(--muted);display:grid;gap:5px}.fieldgrid input{background:#0c1426;border:1px solid #2b416d;color:var(--text);border-radius:10px;padding:9px 8px;width:100%}
     .hidden{display:none!important}.right{margin-left:auto}.footer{color:var(--muted);font-size:12px;margin:24px 0 8px;line-height:1.5}.kbd{font-family:Consolas,monospace;background:#0a1222;border:1px solid #2b416d;border-radius:6px;padding:1px 5px;color:#dbe6ff}.search{background:#0c1426;border:1px solid #2b416d;color:var(--text);border-radius:12px;padding:10px 12px;min-width:260px}.matrix-status{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+    .public-panel{display:grid;gap:14px}.public-save-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.public-save-row input{background:#0c1426;border:1px solid #2b416d;color:var(--text);border-radius:12px;padding:10px 12px;min-width:240px;max-width:420px;flex:1}.public-snapshots-grid{display:grid;grid-template-columns:repeat(3,minmax(230px,1fr));gap:12px;margin-top:12px}@media(max-width:1100px){.public-snapshots-grid{grid-template-columns:repeat(2,minmax(230px,1fr))}}@media(max-width:720px){.public-snapshots-grid{grid-template-columns:1fr}.public-save-row input{min-width:100%}}.public-record{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.035);padding:12px;display:grid;gap:7px}.public-record strong{font-size:14px}.public-record .meta{font-size:12px;color:var(--muted);line-height:1.45}.public-record button{width:max-content}.status-line{font-size:12px;color:var(--muted)}.status-line.ok{color:#b9f6ca}.status-line.warn{color:#ffe39b}.status-line.error{color:#ffc2c7}
   </style>
 </head>
 <body>
@@ -109,9 +111,26 @@
     </section>
 
     <section id="tab-records" class="tabpane hidden">
-      <div class="records">
-        <div class="card"><div class="hd"><h2>Scenario Snapshots</h2><button class="danger" id="btnClearSnapshots">Clear Snapshots</button></div><div class="bd"><div id="snapshots" class="record-list"></div></div></div>
-        <div class="card"><div class="hd"><h2>Change Log</h2><button class="danger" id="btnClearLog">Clear Log</button></div><div class="bd"><div id="logs" class="record-list"></div></div></div>
+      <div class="grid" style="gap:16px">
+        <div class="card">
+          <div class="hd"><h2>Public Prediction Snapshots</h2><span class="pill blue" id="firebasePill">Firebase: initializing</span></div>
+          <div class="bd public-panel">
+            <div class="note">
+              Save your prediction with your name. Public snapshots are stored in Firebase Firestore and can be viewed by everyone using this site.
+            </div>
+            <div class="public-save-row">
+              <input id="publicPlayerName" type="text" maxlength="40" placeholder="Enter your name" />
+              <button class="success" id="btnSavePublicSnapshot">Save Public Snapshot</button>
+              <button id="btnRefreshPublicSnapshots">Refresh Public List</button>
+            </div>
+            <div id="firebaseStatus" class="status-line">Waiting for Firebase connection...</div>
+            <div id="publicSnapshots" class="public-snapshots-grid"></div>
+          </div>
+        </div>
+        <div class="records">
+          <div class="card"><div class="hd"><h2>Local Scenario Snapshots</h2><button class="danger" id="btnClearSnapshots">Clear Local Snapshots</button></div><div class="bd"><div id="snapshots" class="record-list"></div></div></div>
+          <div class="card"><div class="hd"><h2>Change Log</h2><button class="danger" id="btnClearLog">Clear Log</button></div><div class="bd"><div id="logs" class="record-list"></div></div></div>
+        </div>
       </div>
     </section>
 
@@ -514,13 +533,58 @@ function fillExampleScores(){
 
 function saveSnapshot(){
   recalcAll(); const snaps=loadJSON(SNAP_KEY,[]); const champ=getWinner(104);
-  snaps.unshift({id:'S'+Date.now(),at:new Date().toISOString(),champion:champ||null,qualifiedThirdGroups:computed?.qualifiedThirdGroups||'',md3:state.md3,winners:state.winners,summary:{groups:computed?.tables,thirds:computed?.thirds}});
-  saveJSON(SNAP_KEY,snaps.slice(0,50)); renderRecords(); logEvent('snapshot',`Saved snapshot${champ?' · Champion: '+champ:''}`);
+  snaps.unshift({id:'S'+Date.now(),at:new Date().toISOString(),champion:champ||null,qualifiedThirdGroups:computed?.qualifiedThirdGroups||'',md3:state.md3,winners:state.winners,ranks:state.ranks,conduct:state.conduct,summary:{groups:computed?.tables,thirds:computed?.thirds}});
+  saveJSON(SNAP_KEY,snaps.slice(0,50)); renderRecords(); logEvent('snapshot',`Saved local snapshot${champ?' · Champion: '+champ:''}`);
 }
+
+function cloneData(value){
+  return JSON.parse(JSON.stringify(value ?? null));
+}
+function getCurrentSnapshotData(){
+  recalcAll();
+  const champion=getWinner(104) || 'Not selected';
+  const runnerUp=getLoser(104) || 'Not selected';
+  return {
+    id:'S'+Date.now(),
+    at:new Date().toISOString(),
+    champion,
+    runnerUp,
+    qualifiedThirdGroups:computed?.qualifiedThirdGroups || '',
+    md3:cloneData(state.md3),
+    winners:cloneData(state.winners),
+    ranks:cloneData(state.ranks),
+    conduct:cloneData(state.conduct),
+    computed:{
+      tables:cloneData(computed?.tables || {}),
+      thirds:cloneData(computed?.thirds || []),
+      thirdMap:cloneData(computed?.thirdMap || null),
+      slotTeams:cloneData(computed?.slotTeams || {})
+    }
+  };
+}
+function loadSnapshotData(snapshotData, sourceLabel='snapshot'){
+  if(!snapshotData){alert('Snapshot data is empty.');return;}
+  const snap=snapshotData.snapshotData || snapshotData;
+  const d=defaultState();
+  state={
+    ...d,
+    md3:{...d.md3,...(snap.md3 || {})},
+    winners:{...(snap.winners || {})},
+    ranks:{...d.ranks,...(snap.ranks || {})},
+    conduct:{...d.conduct,...(snap.conduct || {})}
+  };
+  saveState(); renderFixtures(); renderSettings(); recalcAll(); renderRecords(); logEvent('load-snapshot',sourceLabel);
+  const tab=document.querySelector('[data-tab="tab-knockout"]');
+  if(tab) tab.click();
+}
+window.getCurrentSnapshotData=getCurrentSnapshotData;
+window.loadSnapshotData=loadSnapshotData;
+window.escapeSimulatorHtml=esc;
+window.flagSimulatorTeam=flag;
 function renderRecords(){
   const snaps=loadJSON(SNAP_KEY,[]); const logs=loadJSON(LOG_KEY,[]);
   document.getElementById('snapshots').innerHTML=snaps.length?snaps.map(s=>`<div class="record"><strong>${new Date(s.at).toLocaleString()}</strong><div class="small">Champion: ${s.champion?esc(flag(s.champion)):'Not selected'}<br>Third groups: ${esc(s.qualifiedThirdGroups||'-')}</div><button data-loadsnap="${s.id}">Load Snapshot</button></div>`).join(''):'<div class="small">No saved snapshots yet.</div>';
-  document.querySelectorAll('[data-loadsnap]').forEach(b=>b.onclick=()=>{const snap=snaps.find(s=>s.id===b.dataset.loadsnap); if(snap){state.md3=snap.md3;state.winners=snap.winners||{};saveState();renderFixtures();recalcAll();logEvent('load-snapshot',snap.id);}});
+  document.querySelectorAll('[data-loadsnap]').forEach(b=>b.onclick=()=>{const snap=snaps.find(s=>s.id===b.dataset.loadsnap); if(snap){loadSnapshotData(snap,snap.id);}});
   document.getElementById('logs').innerHTML=logs.length?logs.map(l=>`<div class="logline">${new Date(l.at).toLocaleString()}  [${l.type}] ${esc(l.details)}</div>`).join(''):'<div class="small">No changes recorded yet.</div>';
 }
 function exportJSON(){
@@ -530,6 +594,157 @@ function exportJSON(){
 }
 
 init();
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    query,
+    orderBy,
+    limit,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+  import {
+    getAuth,
+    signInAnonymously
+  } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBaDbCbakEunfVf7yo1cPad-KjMVC6Ox80",
+    authDomain: "wc2026-simulator-f41aa.firebaseapp.com",
+    projectId: "wc2026-simulator-f41aa",
+    storageBucket: "wc2026-simulator-f41aa.firebasestorage.app",
+    messagingSenderId: "346456683978",
+    appId: "1:346456683978:web:03ccc25e01d71a549d8b33",
+    measurementId: "G-0KB4JCQEDK"
+  };
+
+  const publicSnapshotCache = new Map();
+  const statusEl = document.getElementById('firebaseStatus');
+  const pillEl = document.getElementById('firebasePill');
+  const listEl = document.getElementById('publicSnapshots');
+  const nameEl = document.getElementById('publicPlayerName');
+  const saveBtn = document.getElementById('btnSavePublicSnapshot');
+  const refreshBtn = document.getElementById('btnRefreshPublicSnapshots');
+
+  let db = null;
+  let authUser = null;
+
+  function setFirebaseStatus(message, type='warn'){
+    if(statusEl){statusEl.textContent=message;statusEl.className='status-line '+type;}
+    if(pillEl){pillEl.textContent='Firebase: '+(type==='ok'?'connected':type==='error'?'error':'working');pillEl.className='pill '+(type==='ok'?'green':type==='error'?'red':'warn');}
+  }
+
+  function safeText(value){
+    return window.escapeSimulatorHtml ? window.escapeSimulatorHtml(value ?? '') : String(value ?? '');
+  }
+
+  function formatSavedAt(savedAt){
+    try{
+      if(savedAt?.toDate) return savedAt.toDate().toLocaleString();
+      if(typeof savedAt === 'string') return new Date(savedAt).toLocaleString();
+    }catch{}
+    return 'Just now';
+  }
+
+  async function initializeFirebase(){
+    try{
+      setFirebaseStatus('Connecting to Firebase...', 'warn');
+      const app = initializeApp(firebaseConfig);
+      db = getFirestore(app);
+      const auth = getAuth(app);
+      const credential = await signInAnonymously(auth);
+      authUser = credential.user;
+      setFirebaseStatus('Firebase connected. Public snapshots are available.', 'ok');
+      await loadPublicSnapshots();
+    }catch(error){
+      console.error(error);
+      setFirebaseStatus('Firebase connection failed: '+error.message, 'error');
+      if(listEl) listEl.innerHTML='<div class="note errorbox">Public snapshots could not be loaded. Check Firestore, Anonymous Auth, and Security Rules.</div>';
+    }
+  }
+
+  async function savePublicSnapshot(){
+    try{
+      if(!db || !authUser) throw new Error('Firebase is not connected yet.');
+      const name=(nameEl?.value || '').trim();
+      if(name.length < 2 || name.length > 40){alert('Please enter a name between 2 and 40 characters.');return;}
+      localStorage.setItem('wc2026_public_player_name', name);
+
+      const snapshotData = window.getCurrentSnapshotData();
+      const champion = snapshotData.champion || 'Not selected';
+      const runnerUp = snapshotData.runnerUp || 'Not selected';
+      setFirebaseStatus('Saving public snapshot...', 'warn');
+
+      await addDoc(collection(db, 'snapshots'), {
+        name,
+        savedAt: serverTimestamp(),
+        champion,
+        runnerUp,
+        qualifiedThirdGroups: snapshotData.qualifiedThirdGroups || '',
+        snapshotData,
+        uid: authUser.uid,
+        appVersion: 'wc2026-static-v2'
+      });
+
+      setFirebaseStatus('Public snapshot saved.', 'ok');
+      await loadPublicSnapshots();
+    }catch(error){
+      console.error(error);
+      setFirebaseStatus('Save failed: '+error.message, 'error');
+      alert('Public save failed. Check Firebase setup and Firestore rules.');
+    }
+  }
+
+  async function loadPublicSnapshots(){
+    try{
+      if(!db) throw new Error('Firestore is not ready.');
+      if(listEl) listEl.innerHTML='<div class="small">Loading public snapshots...</div>';
+      const q = query(collection(db, 'snapshots'), orderBy('savedAt', 'desc'), limit(60));
+      const result = await getDocs(q);
+      publicSnapshotCache.clear();
+      const cards=[];
+      result.forEach((doc)=>{
+        const data=doc.data();
+        publicSnapshotCache.set(doc.id, data.snapshotData || data);
+        cards.push(`
+          <div class="public-record">
+            <strong>${safeText(data.name || 'Unknown')}</strong>
+            <div class="meta">
+              Champion: ${safeText(data.champion || 'Not selected')}<br>
+              Runner-up: ${safeText(data.runnerUp || 'Not selected')}<br>
+              Third groups: ${safeText(data.qualifiedThirdGroups || '-')}<br>
+              Saved: ${safeText(formatSavedAt(data.savedAt))}
+            </div>
+            <button data-load-public="${doc.id}">View Snapshot</button>
+          </div>`);
+      });
+      if(listEl) listEl.innerHTML=cards.length ? cards.join('') : '<div class="small">No public snapshots yet.</div>';
+      document.querySelectorAll('[data-load-public]').forEach(btn=>{
+        btn.onclick=()=>{
+          const snap=publicSnapshotCache.get(btn.dataset.loadPublic);
+          window.loadSnapshotData(snap, 'public snapshot');
+        };
+      });
+      setFirebaseStatus('Public snapshot list loaded.', 'ok');
+    }catch(error){
+      console.error(error);
+      setFirebaseStatus('Public list failed: '+error.message, 'error');
+      if(listEl) listEl.innerHTML='<div class="note errorbox">Could not read public snapshots. Check Firestore indexes/rules and internet connection.</div>';
+    }
+  }
+
+  if(nameEl){nameEl.value=localStorage.getItem('wc2026_public_player_name') || '';}
+  if(saveBtn){saveBtn.onclick=savePublicSnapshot;}
+  if(refreshBtn){refreshBtn.onclick=loadPublicSnapshots;}
+  window.loadPublicSnapshots=loadPublicSnapshots;
+  window.savePublicSnapshot=savePublicSnapshot;
+
+  await initializeFirebase();
 </script>
 </body>
 </html>
