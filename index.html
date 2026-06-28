@@ -26,9 +26,7 @@
     .bracket{overflow-x:visible;padding-bottom:8px;width:100%}.knockout-layout{width:100%;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) clamp(180px,15vw,240px) minmax(0,1fr);gap:10px;align-items:center}.bracket-side{min-width:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;align-items:center}.bracket-column{min-width:0;display:grid;gap:10px;align-content:center}.bracket-column.r32{gap:7px}.bracket-column.r16{gap:18px}.bracket-column.qf{gap:46px}.bracket-column.sf{gap:96px}.side-label{grid-column:1/-1;text-align:center;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:#cfe0ff;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:12px;padding:8px;font-size:clamp(10px,.8vw,12px)}.round-title{font-weight:800;color:#dce7ff;font-size:clamp(10px,.8vw,12px);background:rgba(11,16,32,.9);padding:7px 6px;border-radius:10px;border:1px solid var(--line);z-index:2;text-align:center;white-space:normal}.center-stage{min-width:0;display:grid;gap:12px;align-content:center}.center-stage .round-title{background:linear-gradient(180deg,#244d80,#17365f);border-color:#4da3ff}.match{min-width:0;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.035);overflow:hidden}.match-title{display:flex;justify-content:space-between;gap:6px;padding:8px 8px;border-bottom:1px solid rgba(255,255,255,.07);font-size:clamp(9px,.72vw,11px);color:var(--muted);line-height:1.2}.choice{display:grid;grid-template-columns:1fr;gap:6px;padding:8px}.choice button{text-align:left;background:#101a2e;box-shadow:none;padding:8px 7px;font-size:clamp(10px,.75vw,12px);line-height:1.2;white-space:normal;overflow-wrap:anywhere}.choice button.selected{border-color:#51cc83;background:#123225;color:#c9ffd9}.choice button.loser{opacity:.5}.placeholder{color:#7488b1;font-style:italic}.champion{font-size:30px;font-weight:900;letter-spacing:-.02em}.champion-card{text-align:center;background:linear-gradient(180deg,rgba(32,93,57,.95),rgba(13,43,31,.95));border-color:#50c27b}@media(max-width:1180px){.knockout-layout{grid-template-columns:1fr;align-items:stretch}.center-stage{order:3;max-width:520px;width:100%;margin:0 auto}.right-side{order:2}.left-side{order:1}.bracket-column.r32,.bracket-column.r16,.bracket-column.qf,.bracket-column.sf{gap:10px}.choice button{font-size:12px}.match-title{font-size:11px}}@media(max-width:720px){.bracket-side{grid-template-columns:repeat(2,minmax(0,1fr))}.side-label{grid-column:1/-1}.round-title{font-size:11px}.match-title{font-size:10px}.choice button{font-size:11px;padding:7px 6px}}
     .records{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:1000px){.records{grid-template-columns:1fr}}.record-list{max-height:560px;overflow:auto;display:grid;gap:10px}.record{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.035);padding:12px}.record strong{display:block;margin-bottom:4px}.logline{font-family:Consolas,monospace;font-size:12px;color:#dbe6ff;background:#0a1222;border:1px solid #1d2e4e;border-radius:10px;padding:8px;white-space:pre-wrap}
     .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:900px){.two-col{grid-template-columns:1fr}}.fieldgrid{display:grid;grid-template-columns:repeat(3,minmax(120px,1fr));gap:10px}.fieldgrid label{font-size:12px;color:var(--muted);display:grid;gap:5px}.fieldgrid input{background:#0c1426;border:1px solid #2b416d;color:var(--text);border-radius:10px;padding:9px 8px;width:100%}
-    .hidden{display:none!important}.right{margin-left:auto}.footer{color:var(--muted);font-size:12px;margin:24px 0 8px;line-height:1.5}.kbd{font-family:Consolas,monospace;background:#0a1222;border:1px solid #2b416d;border-radius:6px;padding:1px 5px;color:#dbe6ff}.search{background:#0c1426;border:1px solid #2b416d;color:var(--text);border-radius:12px;padding:10px 12px;min-width:260px}.matrix-status{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-
-    .public-panel{display:grid;gap:14px}.public-save-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.public-save-row input{background:#0c1426;border:1px solid #2b416d;color:var(--text);border-radius:12px;padding:10px 12px;min-width:240px;max-width:420px;flex:1}.public-snapshots-grid{display:grid;grid-template-columns:repeat(3,minmax(230px,1fr));gap:12px;margin-top:12px}@media(max-width:1100px){.public-snapshots-grid{grid-template-columns:repeat(2,minmax(230px,1fr))}}@media(max-width:720px){.public-snapshots-grid{grid-template-columns:1fr}.public-save-row input{min-width:100%}}.public-record{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.035);padding:12px;display:grid;gap:7px}.public-record strong{font-size:14px}.public-record .meta{font-size:12px;color:var(--muted);line-height:1.45}.public-record button{width:max-content}.status-line{font-size:12px;color:var(--muted)}.status-line.ok{color:#b9f6ca}.status-line.warn{color:#ffe39b}.status-line.error{color:#ffc2c7}
+    .hidden{display:none!important}.right{margin-left:auto}.footer{color:var(--muted);font-size:12px;margin:24px 0 8px;line-height:1.5}.kbd{font-family:Consolas,monospace;background:#0a1222;border:1px solid #2b416d;border-radius:6px;padding:1px 5px;color:#dbe6ff}.search{background:#0c1426;border:1px solid #2b416d;color:var(--text);border-radius:12px;padding:10px 12px;min-width:260px}.matrix-status{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.web-sync-panel{border:1px solid #315b8e;background:rgba(77,163,255,.07);border-radius:14px;padding:12px}.web-sync-status{font-size:12px;color:#cfe0ff;line-height:1.45;margin-top:8px}.web-sync-status.error{color:#ffcccc}.web-sync-status.ok{color:#b9f6ca}.web-sync-status.warn{color:#ffe39b}
   </style>
 </head>
 <body>
@@ -41,6 +39,7 @@
         </div>
         <div class="actions">
           <button class="primary" id="btnRecalc">Recalculate</button>
+          <button id="btnAutoFillWebTop">Auto Fill Current Results</button>
           <button class="success" id="btnSnapshot">Save Snapshot</button>
           <button id="btnExport">Export JSON</button>
           <button class="danger" id="btnReset">Reset All</button>
@@ -71,6 +70,15 @@
               <button class="ghost" id="btnLoadMatrix">Refresh Annex C Matrix</button>
             </div>
             <div class="small">The exact third-place-to-bracket assignment is based on the 495-combination Annex C table when available. If the online matrix cannot be loaded, the simulator uses the valid slot-candidate fallback and marks the bracket accordingly.</div>
+            <div class="web-sync-panel">
+              <strong>Web Auto Fill</strong>
+              <div class="small">Fetches current World Cup scores from a JSON scoreboard source, fills completed group results, updates Matchday 3 boxes, recalculates tables, and auto-selects completed knockout winners.</div>
+              <div class="actions" style="margin-top:10px">
+                <button class="primary" id="btnAutoFillWeb">Auto Fill Current Results</button>
+                <button class="ghost" id="btnDisableWebResults">Use Manual/Base Results</button>
+              </div>
+              <div id="webSyncStatus" class="web-sync-status">Web results not loaded yet.</div>
+            </div>
             <div class="actions">
               <button id="btnDemoScores">Fill Example Scores</button>
               <button id="btnClearScores">Clear MD3 Scores</button>
@@ -111,26 +119,9 @@
     </section>
 
     <section id="tab-records" class="tabpane hidden">
-      <div class="grid" style="gap:16px">
-        <div class="card">
-          <div class="hd"><h2>Public Prediction Snapshots</h2><span class="pill blue" id="firebasePill">Firebase: initializing</span></div>
-          <div class="bd public-panel">
-            <div class="note">
-              Save your prediction with your name. Public snapshots are stored in Firebase Firestore and can be viewed by everyone using this site.
-            </div>
-            <div class="public-save-row">
-              <input id="publicPlayerName" type="text" maxlength="40" placeholder="Enter your name" />
-              <button class="success" id="btnSavePublicSnapshot">Save Public Snapshot</button>
-              <button id="btnRefreshPublicSnapshots">Refresh Public List</button>
-            </div>
-            <div id="firebaseStatus" class="status-line">Waiting for Firebase connection...</div>
-            <div id="publicSnapshots" class="public-snapshots-grid"></div>
-          </div>
-        </div>
-        <div class="records">
-          <div class="card"><div class="hd"><h2>Local Scenario Snapshots</h2><button class="danger" id="btnClearSnapshots">Clear Local Snapshots</button></div><div class="bd"><div id="snapshots" class="record-list"></div></div></div>
-          <div class="card"><div class="hd"><h2>Change Log</h2><button class="danger" id="btnClearLog">Clear Log</button></div><div class="bd"><div id="logs" class="record-list"></div></div></div>
-        </div>
+      <div class="records">
+        <div class="card"><div class="hd"><h2>Scenario Snapshots</h2><button class="danger" id="btnClearSnapshots">Clear Snapshots</button></div><div class="bd"><div id="snapshots" class="record-list"></div></div></div>
+        <div class="card"><div class="hd"><h2>Change Log</h2><button class="danger" id="btnClearLog">Clear Log</button></div><div class="bd"><div id="logs" class="record-list"></div></div></div>
       </div>
     </section>
 
@@ -146,6 +137,8 @@ const STORAGE_KEY = 'wc2026_simulator_state_v1';
 const SNAP_KEY = 'wc2026_simulator_snapshots_v1';
 const LOG_KEY = 'wc2026_simulator_log_v1';
 const MATRIX_KEY = 'wc2026_annex_c_matrix_v1';
+const WEB_RESULTS_SOURCE = 'ESPN scoreboard JSON';
+const WEB_SCOREBOARD_RANGE_URL = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260719&limit=250&groups=100';
 
 const FLAGS = {
   'Mexico':'🇲🇽','South Korea':'🇰🇷','Czechia':'🇨🇿','South Africa':'🇿🇦','Canada':'🇨🇦','Switzerland':'🇨🇭','Bosnia and Herzegovina':'🇧🇦','Qatar':'🇶🇦','Brazil':'🇧🇷','Morocco':'🇲🇦','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Haiti':'🇭🇹','USA':'🇺🇸','Australia':'🇦🇺','Paraguay':'🇵🇾','Türkiye':'🇹🇷','Germany':'🇩🇪',"Côte d'Ivoire":'🇨🇮','Ecuador':'🇪🇨','Curaçao':'🇨🇼','Netherlands':'🇳🇱','Japan':'🇯🇵','Sweden':'🇸🇪','Tunisia':'🇹🇳','Egypt':'🇪🇬','Iran':'🇮🇷','Belgium':'🇧🇪','New Zealand':'🇳🇿','Spain':'🇪🇸','Uruguay':'🇺🇾','Cabo Verde':'🇨🇻','Saudi Arabia':'🇸🇦','France':'🇫🇷','Norway':'🇳🇴','Senegal':'🇸🇳','Iraq':'🇮🇶','Argentina':'🇦🇷','Austria':'🇦🇹','Algeria':'🇩🇿','Jordan':'🇯🇴','Colombia':'🇨🇴','Portugal':'🇵🇹','DR Congo':'🇨🇩','Uzbekistan':'🇺🇿','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Ghana':'🇬🇭','Croatia':'🇭🇷','Panama':'🇵🇦'
@@ -169,6 +162,34 @@ const GROUPS = {
   K:['Portugal','DR Congo','Uzbekistan','Colombia'],
   L:['England','Croatia','Ghana','Panama']
 };
+
+
+const ALL_TEAMS = Object.values(GROUPS).flat();
+const TEAM_ALIASES = {
+  'United States':'USA','United States of America':'USA','US':'USA','U.S.':'USA','Korea Republic':'South Korea','Republic of Korea':'South Korea','South Korea Republic':'South Korea','Czech Republic':'Czechia','Cote dIvoire':"Côte d'Ivoire",'Côte dIvoire':"Côte d'Ivoire",'Ivory Coast':"Côte d'Ivoire",'Cape Verde':'Cabo Verde','Cape Verde Islands':'Cabo Verde','Curacao':'Curaçao','Türkiye':'Türkiye','Turkiye':'Türkiye','Turkey':'Türkiye','DRC':'DR Congo','Congo DR':'DR Congo','Democratic Republic of Congo':'DR Congo','Democratic Republic of the Congo':'DR Congo','Bosnia-Herzegovina':'Bosnia and Herzegovina','Bosnia Herzegovina':'Bosnia and Herzegovina'
+};
+function normalizeTeamName(value){
+  return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/&/g,' and ').replace(/[^a-z0-9]+/g,' ').trim();
+}
+const TEAM_LOOKUP = (()=>{
+  const lookup={};
+  ALL_TEAMS.forEach(t=>lookup[normalizeTeamName(t)]=t);
+  Object.entries(TEAM_ALIASES).forEach(([alias,team])=>lookup[normalizeTeamName(alias)]=team);
+  return lookup;
+})();
+const GROUP_BY_TEAM = (()=>{const out={};Object.entries(GROUPS).forEach(([g,teams])=>teams.forEach(t=>out[t]=g));return out;})();
+function canonicalTeamName(value){
+  const key=normalizeTeamName(value);
+  if(TEAM_LOOKUP[key]) return TEAM_LOOKUP[key];
+  return ALL_TEAMS.find(t=>normalizeTeamName(t)===key) || null;
+}
+function groupMatchKey(g,a,b){return g+'|'+[a,b].sort().join('|');}
+function ymdFromDate(value){
+  if(!value) return '';
+  const d=new Date(value);
+  if(Number.isNaN(d.getTime())) return '';
+  return d.toISOString().slice(0,10).replaceAll('-','');
+}
 
 const BASE_MATCHES = [
   ['A','Mexico','South Africa',2,0],['A','South Korea','Czechia',2,1],['A','Czechia','South Africa',1,1],['A','Mexico','South Korea',1,0],
@@ -248,7 +269,7 @@ function defaultState(){
   const ranks = {}; const conduct = {};
   Object.values(GROUPS).flat().forEach(t=>{ranks[t]=FIFA_RANK_DEFAULT[t] || 99; conduct[t]=0;});
   const md3 = {}; MD3_FIXTURES.forEach(f=>md3[f.id]={a:null,b:null});
-  return {md3, winners:{}, ranks, conduct, lastSaved:new Date().toISOString()};
+  return {md3, winners:{}, ranks, conduct, useWebResults:false, webResults:{fetchedAt:null, source:null, groupMatches:[], knockoutMatches:[], rawEventCount:0}, lastSaved:new Date().toISOString()};
 }
 function loadJSON(key,fallback){try{return JSON.parse(localStorage.getItem(key)) ?? fallback}catch{return fallback}}
 function saveJSON(key,value){localStorage.setItem(key,JSON.stringify(value));}
@@ -260,12 +281,15 @@ function teamName(ref){return computed?.slotTeams?.[ref] || ref;}
 
 function init(){
   const saved = loadJSON(STORAGE_KEY,null); if(saved) state = mergeState(saved);
-  renderFixtures(); renderSettings(); recalcAll(); renderRecords(); setupEvents(); updateMatrixPill(); loadAnnexMatrix(false);
+  renderFixtures(); renderSettings(); recalcAll(); renderRecords(); setupEvents(); updateMatrixPill(); updateWebSyncStatus(); loadAnnexMatrix(false);
 }
-function mergeState(saved){const d=defaultState();return {...d,...saved,md3:{...d.md3,...(saved.md3||{})},winners:{...(saved.winners||{})},ranks:{...d.ranks,...(saved.ranks||{})},conduct:{...d.conduct,...(saved.conduct||{})}}}
+function mergeState(saved){const d=defaultState();return {...d,...saved,md3:{...d.md3,...(saved.md3||{})},winners:{...(saved.winners||{})},ranks:{...d.ranks,...(saved.ranks||{})},conduct:{...d.conduct,...(saved.conduct||{})},webResults:{...d.webResults,...(saved.webResults||{})}}}
 function setupEvents(){
   document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.tabpane').forEach(x=>x.classList.add('hidden'));document.getElementById(b.dataset.tab).classList.remove('hidden');});
   document.getElementById('btnRecalc').onclick=()=>{recalcAll();logEvent('recalculate','Manual recalculation');};
+  document.getElementById('btnAutoFillWeb').onclick=autoFillCurrentResultsFromWeb;
+  document.getElementById('btnAutoFillWebTop').onclick=autoFillCurrentResultsFromWeb;
+  document.getElementById('btnDisableWebResults').onclick=()=>{state.useWebResults=false;state.webResults={...defaultState().webResults};state.winners={};saveState();renderFixtures();recalcAll();updateWebSyncStatus('Manual/base results are active.','warn');logEvent('web-sync','Disabled web result override');};
   document.getElementById('btnSnapshot').onclick=saveSnapshot;
   document.getElementById('btnExport').onclick=exportJSON;
   document.getElementById('btnReset').onclick=()=>{if(confirm('Reset scores, winners, settings and local state?')){localStorage.removeItem(STORAGE_KEY);state=defaultState();renderFixtures();renderSettings();recalcAll();logEvent('reset','Reset all simulator state');}};
@@ -274,6 +298,142 @@ function setupEvents(){
   document.getElementById('btnClearSnapshots').onclick=()=>{if(confirm('Clear saved snapshots?')){saveJSON(SNAP_KEY,[]);renderRecords();}};
   document.getElementById('btnClearLog').onclick=()=>{if(confirm('Clear change log?')){saveJSON(LOG_KEY,[]);renderRecords();}};
   document.getElementById('btnLoadMatrix').onclick=()=>loadAnnexMatrix(true);
+}
+
+
+function updateWebSyncStatus(message, level){
+  const el=document.getElementById('webSyncStatus');
+  if(!el) return;
+  const wr=state.webResults||{};
+  const base=message || (state.useWebResults && wr.fetchedAt
+    ? `Web results active. Last sync: ${new Date(wr.fetchedAt).toLocaleString()} · Group matches: ${(wr.groupMatches||[]).length} · Knockout matches: ${(wr.knockoutMatches||[]).length}`
+    : 'Web results not loaded yet. Manual/base simulator values are active.');
+  el.textContent=base;
+  el.className='web-sync-status '+(level || (state.useWebResults?'ok':'warn'));
+}
+async function autoFillCurrentResultsFromWeb(){
+  const buttons=[document.getElementById('btnAutoFillWeb'),document.getElementById('btnAutoFillWebTop')].filter(Boolean);
+  buttons.forEach(b=>{b.disabled=true;b.textContent='Fetching results...';});
+  updateWebSyncStatus('Fetching current World Cup results from scoreboard JSON...', 'warn');
+  try{
+    const payloads=await fetchScoreboardPayloads();
+    const events=dedupeEvents(payloads.flatMap(p=>Array.isArray(p?.events)?p.events:[]));
+    const parsed=parseScoreboardEvents(events);
+    if(!parsed.groupMatches.length && !parsed.knockoutMatches.length){
+      throw new Error('No recognizable World Cup 2026 match results were found in the scoreboard response.');
+    }
+    applyWebResults(parsed,events.length);
+    logEvent('web-sync',`Fetched ${events.length} events · group matches ${parsed.groupMatches.length} · knockout matches ${parsed.knockoutMatches.length}`);
+  }catch(err){
+    console.error(err);
+    updateWebSyncStatus('Auto fill failed: '+err.message+' Check internet/CORS access or use a proper sports-data API endpoint.', 'error');
+    logEvent('web-sync-error',err.message);
+  }finally{
+    buttons.forEach(b=>{b.disabled=false;b.textContent='Auto Fill Current Results';});
+  }
+}
+async function fetchScoreboardPayloads(){
+  const payloads=[];
+  try{
+    const res=await fetch(WEB_SCOREBOARD_RANGE_URL,{cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const json=await res.json();
+    if(Array.isArray(json?.events) && json.events.length){
+      payloads.push(json);
+      return payloads;
+    }
+  }catch(err){
+    console.warn('Range scoreboard failed; trying daily fetches.',err);
+  }
+  const dates=dateRange('2026-06-11','2026-07-19');
+  const chunks=[];
+  for(const d of dates){
+    const url=`https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=${d}&limit=80&groups=100`;
+    chunks.push(fetch(url,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null));
+  }
+  const daily=await Promise.all(chunks);
+  daily.filter(Boolean).forEach(x=>payloads.push(x));
+  if(!payloads.length) throw new Error('Could not fetch scoreboard JSON. Browser CORS or network access may be blocking the source.');
+  return payloads;
+}
+function dateRange(start,end){
+  const out=[]; const d=new Date(start+'T00:00:00Z'); const last=new Date(end+'T00:00:00Z');
+  while(d<=last){out.push(d.toISOString().slice(0,10).replaceAll('-',''));d.setUTCDate(d.getUTCDate()+1);} return out;
+}
+function dedupeEvents(events){
+  const seen=new Set(); const out=[];
+  events.forEach(ev=>{const id=ev?.id || ev?.uid || ev?.guid || JSON.stringify([ev?.date,ev?.name]); if(seen.has(id)) return; seen.add(id); out.push(ev);});
+  return out;
+}
+function parseScoreboardEvents(events){
+  const groupMatches=[]; const knockoutMatches=[];
+  events.forEach(ev=>{
+    const comp=ev?.competitions?.[0];
+    const comps=Array.isArray(comp?.competitors)?comp.competitors:[];
+    if(comps.length<2) return;
+    const teams=comps.slice(0,2).map(c=>{
+      const raw=c?.team?.displayName || c?.team?.shortDisplayName || c?.team?.name || c?.team?.location || c?.team?.abbreviation || '';
+      const team=canonicalTeamName(raw);
+      const scoreRaw=c?.score ?? c?.curatedRank?.current;
+      const score=scoreRaw==='' || scoreRaw===undefined || scoreRaw===null ? null : parseInt(scoreRaw,10);
+      return {raw,team,score,winner:c?.winner===true};
+    });
+    if(!teams[0].team || !teams[1].team) return;
+    if(!Number.isFinite(teams[0].score) || !Number.isFinite(teams[1].score)) return;
+    const statusName=String(ev?.status?.type?.name || ev?.status?.type?.description || '').toUpperCase();
+    const completed=ev?.status?.type?.completed===true || statusName.includes('FINAL') || statusName.includes('FT') || statusName.includes('FULL');
+    const eventDate=ymdFromDate(ev?.date || comp?.date);
+    const gA=GROUP_BY_TEAM[teams[0].team], gB=GROUP_BY_TEAM[teams[1].team];
+    const record={eventId:ev?.id||'',date:eventDate,status:statusName,completed,teams,sourceName:ev?.name||ev?.shortName||''};
+    if(gA && gA===gB && eventDate && eventDate<='20260627'){
+      groupMatches.push({g:gA,a:teams[0].team,b:teams[1].team,ga:teams[0].score,gb:teams[1].score,completed,date:eventDate,eventId:record.eventId});
+    }else if(eventDate && eventDate>='20260628'){
+      const winner=teams.find(t=>t.winner)?.team || (completed && teams[0].score!==teams[1].score ? (teams[0].score>teams[1].score?teams[0].team:teams[1].team) : null);
+      knockoutMatches.push({...record,winner});
+    }
+  });
+  const groupByKey={};
+  groupMatches.forEach(m=>{groupByKey[groupMatchKey(m.g,m.a,m.b)]={...m,played:true};});
+  return {groupMatches:Object.values(groupByKey),knockoutMatches};
+}
+function applyWebResults(parsed,rawEventCount){
+  const wr={
+    fetchedAt:new Date().toISOString(),source:WEB_RESULTS_SOURCE,rawEventCount,
+    groupMatches:parsed.groupMatches,
+    knockoutMatches:parsed.knockoutMatches
+  };
+  state.useWebResults=true;
+  state.webResults=wr;
+  MD3_FIXTURES.forEach(f=>{
+    const gm=wr.groupMatches.find(m=>m.g===f.g && ((m.a===f.a && m.b===f.b)||(m.a===f.b && m.b===f.a)));
+    if(gm){state.md3[f.id]={a:gm.a===f.a?gm.ga:gm.gb,b:gm.a===f.a?gm.gb:gm.ga};}
+  });
+  state.winners={};
+  saveState();
+  renderFixtures();
+  recalcAll();
+  const winnersApplied=applyWebKnockoutWinners(wr.knockoutMatches);
+  saveState();
+  recalcAll();
+  updateWebSyncStatus(`Web results active. Last sync: ${new Date(wr.fetchedAt).toLocaleString()} · Group matches loaded: ${wr.groupMatches.length} · Knockout winners applied: ${winnersApplied}`, 'ok');
+}
+function applyWebKnockoutWinners(knockoutMatches){
+  if(!Array.isArray(knockoutMatches)||!knockoutMatches.length||!computed?.complete) return 0;
+  let applied=0;
+  const matchIds=[...ROUND_OF_32.map(x=>x.m),...NEXT_ROUNDS.flatMap(r=>r.matches.map(x=>x.m))].sort((a,b)=>a-b);
+  for(const m of matchIds){
+    const teams=getMatchTeams(m);
+    if(!teams?.left || !teams?.right) continue;
+    const web=knockoutMatches.find(k=>{
+      const names=(k.teams||[]).map(t=>t.team).filter(Boolean);
+      return names.includes(teams.left) && names.includes(teams.right) && k.completed;
+    });
+    if(web && web.winner && (web.winner===teams.left || web.winner===teams.right)){
+      state.winners[String(m)]=web.winner;
+      applied++;
+    }
+  }
+  return applied;
 }
 
 async function loadAnnexMatrix(force){
@@ -341,8 +501,14 @@ function renderSettings(){
 }
 
 function getAllMatches(){
-  const matches=BASE_MATCHES.map(([g,a,b,ga,gb])=>({g,a,b,ga,gb,played:true}));
-  MD3_FIXTURES.forEach(f=>{const s=state.md3[f.id]; if(s && s.a!==null && s.b!==null) matches.push({g:f.g,a:f.a,b:f.b,ga:s.a,gb:s.b,played:true});});
+  if(state.useWebResults && Array.isArray(state.webResults?.groupMatches) && state.webResults.groupMatches.length){
+    const byKey={};
+    state.webResults.groupMatches.forEach(m=>{if(m && m.g && m.a && m.b && Number.isFinite(m.ga) && Number.isFinite(m.gb)) byKey[groupMatchKey(m.g,m.a,m.b)]={g:m.g,a:m.a,b:m.b,ga:m.ga,gb:m.gb,played:true,source:'web'};});
+    MD3_FIXTURES.forEach(f=>{const s=state.md3[f.id]; if(s && s.a!==null && s.b!==null) byKey[groupMatchKey(f.g,f.a,f.b)]={g:f.g,a:f.a,b:f.b,ga:s.a,gb:s.b,played:true,source:'manual-md3'};});
+    return Object.values(byKey);
+  }
+  const matches=BASE_MATCHES.map(([g,a,b,ga,gb])=>({g,a,b,ga,gb,played:true,source:'base'}));
+  MD3_FIXTURES.forEach(f=>{const s=state.md3[f.id]; if(s && s.a!==null && s.b!==null) matches.push({g:f.g,a:f.a,b:f.b,ga:s.a,gb:s.b,played:true,source:'manual-md3'});});
   return matches;
 }
 function blankStats(team,g){return {team,g,mp:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,pts:0,conduct:state.conduct[team]??0,rank:state.ranks[team]??99,h2h:{}};}
@@ -390,7 +556,7 @@ function rankThirds(tables){
 function recalcAll(){
   const calc=calculateTables();
   const thirds=rankThirds(calc.tables);
-  const complete=MD3_FIXTURES.every(f=>state.md3[f.id]?.a!==null && state.md3[f.id]?.b!==null);
+  const complete=state.useWebResults ? Object.values(calc.tables).every(rows=>rows.every(r=>r.mp>=3)) : MD3_FIXTURES.every(f=>state.md3[f.id]?.a!==null && state.md3[f.id]?.b!==null);
   const qualifiedThirdGroups=thirds.slice(0,8).map(x=>x.group).sort().join('');
   const thirdMap=complete?assignThirdSlots(qualifiedThirdGroups):{map:{},exact:false,warning:'Enter all Matchday 3 scores to lock the bracket.'};
   const slotTeams={};
@@ -528,63 +694,18 @@ function removeDownstreamWinners(changed){
 function fillExampleScores(){
   const examples=[1,0,2,1,1,2,2,0,1,2,2,0,0,2,1,1,2,2,0,3,0,1,1,1,2,1,3,0,1,0,2,3,1,1,0,2,0,2,2,1,1,1,2,0,0,1,0,2];
   MD3_FIXTURES.forEach((f,i)=>{state.md3[f.id]={a:examples[i*2],b:examples[i*2+1]};});
-  state.winners={}; saveState(); renderFixtures(); recalcAll(); logEvent('demo','Filled example Matchday 3 scores');
+  state.useWebResults=false; state.webResults={...defaultState().webResults}; state.winners={}; saveState(); renderFixtures(); recalcAll(); updateWebSyncStatus('Demo/manual scenario is active. Web result override disabled.','warn'); logEvent('demo','Filled example Matchday 3 scores');
 }
 
 function saveSnapshot(){
   recalcAll(); const snaps=loadJSON(SNAP_KEY,[]); const champ=getWinner(104);
-  snaps.unshift({id:'S'+Date.now(),at:new Date().toISOString(),champion:champ||null,qualifiedThirdGroups:computed?.qualifiedThirdGroups||'',md3:state.md3,winners:state.winners,ranks:state.ranks,conduct:state.conduct,summary:{groups:computed?.tables,thirds:computed?.thirds}});
-  saveJSON(SNAP_KEY,snaps.slice(0,50)); renderRecords(); logEvent('snapshot',`Saved local snapshot${champ?' · Champion: '+champ:''}`);
+  snaps.unshift({id:'S'+Date.now(),at:new Date().toISOString(),champion:champ||null,qualifiedThirdGroups:computed?.qualifiedThirdGroups||'',md3:state.md3,winners:state.winners,summary:{groups:computed?.tables,thirds:computed?.thirds}});
+  saveJSON(SNAP_KEY,snaps.slice(0,50)); renderRecords(); logEvent('snapshot',`Saved snapshot${champ?' · Champion: '+champ:''}`);
 }
-
-function cloneData(value){
-  return JSON.parse(JSON.stringify(value ?? null));
-}
-function getCurrentSnapshotData(){
-  recalcAll();
-  const champion=getWinner(104) || 'Not selected';
-  const runnerUp=getLoser(104) || 'Not selected';
-  return {
-    id:'S'+Date.now(),
-    at:new Date().toISOString(),
-    champion,
-    runnerUp,
-    qualifiedThirdGroups:computed?.qualifiedThirdGroups || '',
-    md3:cloneData(state.md3),
-    winners:cloneData(state.winners),
-    ranks:cloneData(state.ranks),
-    conduct:cloneData(state.conduct),
-    computed:{
-      tables:cloneData(computed?.tables || {}),
-      thirds:cloneData(computed?.thirds || []),
-      thirdMap:cloneData(computed?.thirdMap || null),
-      slotTeams:cloneData(computed?.slotTeams || {})
-    }
-  };
-}
-function loadSnapshotData(snapshotData, sourceLabel='snapshot'){
-  if(!snapshotData){alert('Snapshot data is empty.');return;}
-  const snap=snapshotData.snapshotData || snapshotData;
-  const d=defaultState();
-  state={
-    ...d,
-    md3:{...d.md3,...(snap.md3 || {})},
-    winners:{...(snap.winners || {})},
-    ranks:{...d.ranks,...(snap.ranks || {})},
-    conduct:{...d.conduct,...(snap.conduct || {})}
-  };
-  saveState(); renderFixtures(); renderSettings(); recalcAll(); renderRecords(); logEvent('load-snapshot',sourceLabel);
-  const tab=document.querySelector('[data-tab="tab-knockout"]');
-  if(tab) tab.click();
-}
-window.getCurrentSnapshotData=getCurrentSnapshotData;
-window.loadSnapshotData=loadSnapshotData;
-window.escapeSimulatorHtml=esc;
-window.flagSimulatorTeam=flag;
 function renderRecords(){
   const snaps=loadJSON(SNAP_KEY,[]); const logs=loadJSON(LOG_KEY,[]);
   document.getElementById('snapshots').innerHTML=snaps.length?snaps.map(s=>`<div class="record"><strong>${new Date(s.at).toLocaleString()}</strong><div class="small">Champion: ${s.champion?esc(flag(s.champion)):'Not selected'}<br>Third groups: ${esc(s.qualifiedThirdGroups||'-')}</div><button data-loadsnap="${s.id}">Load Snapshot</button></div>`).join(''):'<div class="small">No saved snapshots yet.</div>';
-  document.querySelectorAll('[data-loadsnap]').forEach(b=>b.onclick=()=>{const snap=snaps.find(s=>s.id===b.dataset.loadsnap); if(snap){loadSnapshotData(snap,snap.id);}});
+  document.querySelectorAll('[data-loadsnap]').forEach(b=>b.onclick=()=>{const snap=snaps.find(s=>s.id===b.dataset.loadsnap); if(snap){state.md3=snap.md3;state.winners=snap.winners||{};saveState();renderFixtures();recalcAll();logEvent('load-snapshot',snap.id);}});
   document.getElementById('logs').innerHTML=logs.length?logs.map(l=>`<div class="logline">${new Date(l.at).toLocaleString()}  [${l.type}] ${esc(l.details)}</div>`).join(''):'<div class="small">No changes recorded yet.</div>';
 }
 function exportJSON(){
@@ -594,160 +715,6 @@ function exportJSON(){
 }
 
 init();
-</script>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    getDocs,
-    query,
-    orderBy,
-    limit,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
-  import {
-    getAuth,
-    signInAnonymously
-  } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBaDbCbakEunfVf7yo1cPad-KjMVC6Ox80",
-    authDomain: "wc2026-simulator-f41aa.firebaseapp.com",
-    projectId: "wc2026-simulator-f41aa",
-    storageBucket: "wc2026-simulator-f41aa.firebasestorage.app",
-    messagingSenderId: "346456683978",
-    appId: "1:346456683978:web:03ccc25e01d71a549d8b33",
-    measurementId: "G-0KB4JCQEDK"
-  };
-
-  const publicSnapshotCache = new Map();
-  const statusEl = document.getElementById('firebaseStatus');
-  const pillEl = document.getElementById('firebasePill');
-  const listEl = document.getElementById('publicSnapshots');
-  const nameEl = document.getElementById('publicPlayerName');
-  const saveBtn = document.getElementById('btnSavePublicSnapshot');
-  const refreshBtn = document.getElementById('btnRefreshPublicSnapshots');
-
-  let db = null;
-  let authUser = null;
-
-  function setFirebaseStatus(message, type='warn'){
-    if(statusEl){statusEl.textContent=message;statusEl.className='status-line '+type;}
-    if(pillEl){pillEl.textContent='Firebase: '+(type==='ok'?'connected':type==='error'?'error':'working');pillEl.className='pill '+(type==='ok'?'green':type==='error'?'red':'warn');}
-  }
-
-  function safeText(value){
-    return window.escapeSimulatorHtml ? window.escapeSimulatorHtml(value ?? '') : String(value ?? '');
-  }
-
-  function formatSavedAt(savedAt, savedAtMs){
-    try{
-      if(savedAt?.toDate) return savedAt.toDate().toLocaleString();
-      if(typeof savedAt === 'string') return new Date(savedAt).toLocaleString();
-      if(typeof savedAtMs === 'number') return new Date(savedAtMs).toLocaleString();
-    }catch{}
-    return 'Just now';
-  }
-
-  async function initializeFirebase(){
-    try{
-      setFirebaseStatus('Connecting to Firebase...', 'warn');
-      const app = initializeApp(firebaseConfig);
-      db = getFirestore(app);
-      const auth = getAuth(app);
-      const credential = await signInAnonymously(auth);
-      authUser = credential.user;
-      setFirebaseStatus('Firebase connected. Public snapshots are available.', 'ok');
-      await loadPublicSnapshots();
-    }catch(error){
-      console.error(error);
-      setFirebaseStatus('Firebase connection failed: '+error.message, 'error');
-      if(listEl) listEl.innerHTML='<div class="note errorbox">Public snapshots could not be loaded. Check Firestore, Anonymous Auth, and Security Rules.</div>';
-    }
-  }
-
-  async function savePublicSnapshot(){
-    try{
-      if(!db || !authUser) throw new Error('Firebase is not connected yet.');
-      const name=(nameEl?.value || '').trim();
-      if(name.length < 2 || name.length > 40){alert('Please enter a name between 2 and 40 characters.');return;}
-      localStorage.setItem('wc2026_public_player_name', name);
-
-      const snapshotData = window.getCurrentSnapshotData();
-      const champion = snapshotData.champion || 'Not selected';
-      const runnerUp = snapshotData.runnerUp || 'Not selected';
-      setFirebaseStatus('Saving public snapshot...', 'warn');
-
-      await addDoc(collection(db, 'snapshots'), {
-        name,
-        savedAt: serverTimestamp(),
-        savedAtMs: Date.now(),
-        champion,
-        runnerUp,
-        qualifiedThirdGroups: snapshotData.qualifiedThirdGroups || '',
-        snapshotData,
-        uid: authUser.uid,
-        appVersion: 'wc2026-static-v2'
-      });
-
-      setFirebaseStatus('Public snapshot saved.', 'ok');
-      await loadPublicSnapshots();
-    }catch(error){
-      console.error(error);
-      const code = error.code ? error.code + ': ' : '';
-      setFirebaseStatus('Save failed: '+code+error.message, 'error');
-      alert('Public save failed. '+code+error.message);
-    }
-  }
-
-  async function loadPublicSnapshots(){
-    try{
-      if(!db) throw new Error('Firestore is not ready.');
-      if(listEl) listEl.innerHTML='<div class="small">Loading public snapshots...</div>';
-      const q = query(collection(db, 'snapshots'), orderBy('savedAtMs', 'desc'), limit(60));
-      const result = await getDocs(q);
-      publicSnapshotCache.clear();
-      const cards=[];
-      result.forEach((doc)=>{
-        const data=doc.data();
-        publicSnapshotCache.set(doc.id, data.snapshotData || data);
-        cards.push(`
-          <div class="public-record">
-            <strong>${safeText(data.name || 'Unknown')}</strong>
-            <div class="meta">
-              Champion: ${safeText(data.champion || 'Not selected')}<br>
-              Runner-up: ${safeText(data.runnerUp || 'Not selected')}<br>
-              Third groups: ${safeText(data.qualifiedThirdGroups || '-')}<br>
-              Saved: ${safeText(formatSavedAt(data.savedAt, data.savedAtMs))}
-            </div>
-            <button data-load-public="${doc.id}">View Snapshot</button>
-          </div>`);
-      });
-      if(listEl) listEl.innerHTML=cards.length ? cards.join('') : '<div class="small">No public snapshots yet.</div>';
-      document.querySelectorAll('[data-load-public]').forEach(btn=>{
-        btn.onclick=()=>{
-          const snap=publicSnapshotCache.get(btn.dataset.loadPublic);
-          window.loadSnapshotData(snap, 'public snapshot');
-        };
-      });
-      setFirebaseStatus('Public snapshot list loaded.', 'ok');
-    }catch(error){
-      console.error(error);
-      setFirebaseStatus('Public list failed: '+error.message, 'error');
-      if(listEl) listEl.innerHTML='<div class="note errorbox">Could not read public snapshots. Check Firestore indexes/rules and internet connection.</div>';
-    }
-  }
-
-  if(nameEl){nameEl.value=localStorage.getItem('wc2026_public_player_name') || '';}
-  if(saveBtn){saveBtn.onclick=savePublicSnapshot;}
-  if(refreshBtn){refreshBtn.onclick=loadPublicSnapshots;}
-  window.loadPublicSnapshots=loadPublicSnapshots;
-  window.savePublicSnapshot=savePublicSnapshot;
-
-  await initializeFirebase();
 </script>
 </body>
 </html>
