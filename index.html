@@ -35,17 +35,17 @@
       <div class="topbar">
         <div>
           <h1>FIFA World Cup 2026 Simulator</h1>
-          <p class="subtitle">Current group tables are loaded from the uploaded result set. Use the knockout bracket to simulate winners, or import a JSON file to update the scenario.</p>
+          <p class="subtitle">Current group tables are loaded from the uploaded result set. Use the knockout bracket to simulate winners manually.</p>
         </div>
         <div class="actions">
-          <button class="primary" id="btnImportJsonTop">Import JSON</button>
+          <button class="danger" id="btnResetKnockoutTop">Reset Knockout</button>
           <button id="btnExport">Export JSON</button>
         </div>
       </div>
       <nav class="tabs" id="tabs">
         <button class="tab active" data-tab="tab-standings">1. Current Tables</button>
         <button class="tab" data-tab="tab-knockout">2. Knockout Simulator</button>
-        <button class="tab" data-tab="tab-import">3. Import JSON</button>
+        <button class="tab" type="button" id="btnResetKnockoutNav">3. Reset Knockout</button>
       </nav>
     </div>
   </header>
@@ -64,30 +64,12 @@
     <section id="tab-knockout" class="tabpane hidden">
       <div class="grid" style="gap:16px">
         <div class="card champion-card hidden" id="championCard"><div class="bd"><div class="small">Projected Champion</div><div class="champion" id="championName"></div></div></div>
-        <div class="card"><div class="hd"><h2>Knockout Bracket</h2><span class="pill" id="bracketStatus">Waiting for current results</span></div><div class="bd"><div id="bracket" class="bracket"></div></div></div>
-      </div>
-    </section>
-
-    <section id="tab-import" class="tabpane hidden">
-      <div class="card">
-        <div class="hd"><h2>Import JSON</h2><span class="pill blue">Optional</span></div>
-        <div class="bd grid" style="gap:14px">
-          <div class="note">
-            Import a simulator export, a simple match-result JSON, or a scoreboard JSON containing <span class="kbd">events</span>. Imported results can update group tables and apply knockout winners.
-          </div>
-          <input type="file" id="importJsonFileInput" accept="application/json,.json" class="hidden" />
-          <div class="actions">
-            <button id="btnImportJsonFile">Import JSON File</button>
-            <button class="ghost" id="btnApplyJsonText">Apply Pasted JSON</button>
-          </div>
-          <textarea id="importJsonText" placeholder='Paste JSON here. Example: {"groupMatches":[{"g":"A","a":"Czechia","b":"Mexico","ga":1,"gb":2}],"knockoutMatches":[{"a":"Brazil","b":"Morocco","winner":"Brazil"}]}'></textarea>
-          <div id="importJsonStatus" class="json-import-status">No JSON imported yet.</div>
-        </div>
+        <div class="card"><div class="hd"><h2>Knockout Bracket</h2><div class="actions"><span class="pill" id="bracketStatus">Waiting for current results</span><button class="danger" id="btnResetKnockoutBracket" type="button">Reset Knockout</button></div></div><div class="bd"><div id="bracket" class="bracket"></div></div></div>
       </div>
     </section>
 
     <div class="footer">
-      Static simulator for public use. Current tables are based on the uploaded result set; knockout selections are manual predictions unless imported from JSON.
+      Static simulator for public use. Current tables are based on the uploaded result set; knockout selections are manual predictions.
     </div>
   </main>
 
@@ -383,14 +365,15 @@ function init(){
 function mergeState(saved){const d=defaultState();return {...d,...saved,mode:'manual',resultsVersion:saved.resultsVersion||CURRENT_RESULTS_VERSION,md3:{...d.md3,...(saved.md3||{})},winners:{...(saved.winners||{})},ranks:{...d.ranks,...(saved.ranks||{})},conduct:{...d.conduct,...(saved.conduct||{})},webResults:{...d.webResults,...(saved.webResults||{})}}}
 function setupEvents(){
   const tabs=document.getElementById('tabs');
-  tabs?.addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;activateTab(b.dataset.tab);});
+  tabs?.addEventListener('click',e=>{
+    const b=e.target.closest('.tab');
+    if(!b) return;
+    if(b.id==='btnResetKnockoutNav'){ resetKnockoutStage(); return; }
+    activateTab(b.dataset.tab);
+  });
 
-  document.getElementById('btnImportJsonTop')?.addEventListener('click',()=>activateTab('tab-import'));
-  document.getElementById('btnImportJsonFile')?.addEventListener('click',()=>document.getElementById('importJsonFileInput')?.click());
-  const importFile=document.getElementById('importJsonFileInput');
-  if(importFile) importFile.onchange=handleImportJsonFile;
-  document.getElementById('btnApplyJsonText')?.addEventListener('click',()=>importJSONFromText(document.getElementById('importJsonText')?.value||'','pasted JSON'));
-
+  document.getElementById('btnResetKnockoutTop')?.addEventListener('click',resetKnockoutStage);
+  document.getElementById('btnResetKnockoutBracket')?.addEventListener('click',resetKnockoutStage);
   document.getElementById('btnExport')?.addEventListener('click',exportJSON);
 }
 function activateTab(tabId){
@@ -938,6 +921,15 @@ function removeDownstreamWinners(changed){
   NEXT_ROUNDS.forEach(round=>round.matches.forEach(x=>{dependencies[x.m]=[x.l,x.r].filter(v=>typeof v==='number').concat([x.l,x.r].filter(v=>typeof v==='string'&&v.startsWith('L')).map(v=>parseInt(v.slice(1),10)));}));
   let dirty=new Set([changed]); let changedLoop=true;
   while(changedLoop){changedLoop=false;for(const [m,deps] of Object.entries(dependencies)){if(deps.some(d=>dirty.has(d)) && state.winners[m]){delete state.winners[m];dirty.add(parseInt(m,10));changedLoop=true;}}}
+}
+
+
+function resetKnockoutStage(){
+  state.winners = {};
+  saveState();
+  recalcAll();
+  activateTab('tab-knockout');
+  logEvent('reset-knockout','Cleared all knockout-stage predictions');
 }
 
 function loadUploadedMd3Results(){
