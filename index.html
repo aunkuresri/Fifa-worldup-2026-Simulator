@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WC 2026 Simulator — Matchday 3 to Final</title>
+  <title>WC 2026 Simulator — Current Tables & Knockout</title>
   <style>
     :root{
       --bg:#0b1020;--panel:#111a2e;--panel-2:#16233c;--muted:#8fa2c7;--text:#f3f6ff;--line:#26375c;--accent:#4da3ff;--accent-2:#7cdd9a;--warn:#ffcc66;--danger:#ff6f6f;--chip:#1d2b49;--shadow:0 18px 45px rgba(0,0,0,.30);--radius:18px;
@@ -35,118 +35,59 @@
       <div class="topbar">
         <div>
           <h1>FIFA World Cup 2026 Simulator</h1>
-          <p class="subtitle">Base table: after two group matches. Enter Matchday 3 goals, calculate qualifiers under FIFA-style ranking rules, then pick winners from Round of 32 to Final. All changes are saved in this browser.</p>
+          <p class="subtitle">Current group tables are loaded from the uploaded result set. Use the knockout bracket to simulate winners, or import a JSON file to update the scenario.</p>
         </div>
         <div class="actions">
-          <button class="primary" id="btnEditModeTop" disabled>Manual Mode Active</button>
-          <button class="ghost" id="btnCurrentResultsTop">Reset to Current Results</button>
-          <button class="success" id="btnSnapshot">Save Snapshot</button>
+          <button class="primary" id="btnImportJsonTop">Import JSON</button>
           <button id="btnExport">Export JSON</button>
-          <button class="danger" id="btnReset">Reset to Current</button>
         </div>
       </div>
       <nav class="tabs" id="tabs">
-        <button class="tab active" data-tab="tab-md3">1. Matchday 3</button>
-        <button class="tab" data-tab="tab-standings">2. Tables & Qualifiers</button>
-        <button class="tab" data-tab="tab-knockout">3. Knockout</button>
-        <button class="tab" data-tab="tab-settings">4. Tie-break Settings</button>
-        <button class="tab" data-tab="tab-records">5. Saved Records</button>
+        <button class="tab active" data-tab="tab-standings">1. Current Tables</button>
+        <button class="tab" data-tab="tab-knockout">2. Knockout Simulator</button>
+        <button class="tab" data-tab="tab-import">3. Import JSON</button>
       </nav>
     </div>
   </header>
 
   <main class="wrap">
-    <section id="tab-md3" class="tabpane">
-      <div class="grid dashboard">
-        <aside class="card">
-          <div class="hd"><h2>Control Panel</h2><span class="pill blue">LocalStorage enabled</span></div>
-          <div class="bd grid" style="gap:14px">
-            <div class="note">
-              <strong>Current result view</strong><br>
-              The uploaded Matchday 3 results are loaded automatically. The knockout bracket starts blank and is always editable for manual simulation.
-            </div>
-            <div class="matrix-status">
-              <span class="pill" id="matrixPill">Annex C: checking...</span>
-              <button class="ghost" id="btnLoadMatrix">Refresh Annex C Matrix</button>
-            </div>
-            <div class="small">The exact third-place-to-bracket assignment is based on the 495-combination Annex C table when available. If the online matrix cannot be loaded, the simulator uses the valid slot-candidate fallback and marks the bracket accordingly.</div>
-            <div class="web-sync-panel hidden">
-              <strong>Web Auto Fill</strong>
-              <div class="small">Fetches current World Cup scores from a JSON scoreboard source, fills completed group results, updates Matchday 3 boxes, recalculates tables, and auto-selects completed knockout winners.</div>
-              <div class="actions" style="margin-top:10px">
-                <button class="primary" id="btnAutoFillWeb">Auto Fill Current Results</button>
-                <button class="ghost" id="btnDisableWebResults">Use Manual/Base Results</button>
-              </div>
-              <div id="webSyncStatus" class="web-sync-status">Web results not loaded yet.</div>
-            </div>
-            <div class="json-import-panel hidden">
-              <strong>Import JSON</strong>
-              <div class="small">Import a simulator export, a simple match-result JSON, or a scoreboard JSON containing <span class="kbd">events</span>. Imported results can fill Matchday 3 and apply completed knockout winners.</div>
-              <input type="file" id="importJsonFileInput" accept="application/json,.json" class="hidden" />
-              <div class="actions" style="margin-top:10px">
-                <button id="btnImportJsonFile">Import JSON File</button>
-                <button class="ghost" id="btnApplyJsonText">Apply Pasted JSON</button>
-              </div>
-              <textarea id="importJsonText" placeholder='Paste JSON here. Example: {"groupMatches":[{"g":"A","a":"Czechia","b":"Mexico","ga":1,"gb":2}]}'></textarea>
-              <div id="importJsonStatus" class="json-import-status">No JSON imported yet.</div>
-            </div>
-            <div class="mode-panel">
-              <div class="matrix-status">
-                <span class="pill warn" id="modePill">Manual simulation mode</span>
-                <button class="primary" id="btnEditMode" disabled>Manual Mode Active</button>
-                <button class="ghost" id="btnCurrentResults">Reset to Current Results</button>
-              </div>
-              <div class="small" style="margin-top:8px">Matchday 3 starts from the uploaded current results. Knockout results are reset and winner buttons are active for manual prediction.</div>
-            </div>
-            <div class="actions manual-only">
-              <button class="success" id="btnLoadUploadedMd3">Load Uploaded MD3 Results</button>
-              <button id="btnDemoScores">Fill Example Scores</button>
-              <button id="btnClearScores">Clear MD3 Scores</button>
-            </div>
-            <div class="note warnbox">
-              Group tie-break fields are editable under <strong>Tie-break Settings</strong>. Conduct score starts at 0; lower disciplinary deduction means a higher conduct score.
-            </div>
-          </div>
-        </aside>
-        <div class="card">
-          <div class="hd"><h2>Matchday 3 Fixtures</h2><span class="pill">24–27 June 2026</span></div>
-          <div class="bd"><div id="fixtures" class="fixtures"></div></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="tab-standings" class="tabpane hidden">
+    <section id="tab-standings" class="tabpane">
       <div class="grid" style="gap:16px">
         <div class="two-col">
           <div class="card"><div class="hd"><h2>Qualification Summary</h2><span class="pill green" id="qCount">0 qualified</span></div><div class="bd" id="summary"></div></div>
           <div class="card"><div class="hd"><h2>Best Third-Place Table</h2><span class="pill warn">Top 8 advance</span></div><div class="bd third-table"><table id="thirdTable"></table></div></div>
         </div>
-        <div class="card"><div class="hd"><h2>Updated Group Tables</h2><span class="pill">Computed from all 3 matches</span></div><div class="bd"><div id="groups" class="groups"></div></div></div>
+        <div class="card"><div class="hd"><h2>Updated Group Tables</h2><span class="pill">Current result</span></div><div class="bd"><div id="groups" class="groups"></div></div></div>
       </div>
     </section>
 
     <section id="tab-knockout" class="tabpane hidden">
       <div class="grid" style="gap:16px">
         <div class="card champion-card hidden" id="championCard"><div class="bd"><div class="small">Projected Champion</div><div class="champion" id="championName"></div></div></div>
-        <div class="card"><div class="hd"><h2>Knockout Bracket</h2><span class="pill" id="bracketStatus">Waiting for MD3 scores</span></div><div class="bd"><div id="bracket" class="bracket"></div></div></div>
+        <div class="card"><div class="hd"><h2>Knockout Bracket</h2><span class="pill" id="bracketStatus">Waiting for current results</span></div><div class="bd"><div id="bracket" class="bracket"></div></div></div>
       </div>
     </section>
 
-    <section id="tab-settings" class="tabpane hidden">
-      <div class="grid" style="gap:16px">
-        <div class="card"><div class="hd"><h2>FIFA Ranking & Conduct Score Fallbacks</h2><span class="pill">Used only if football results cannot separate teams</span></div><div class="bd"><div class="note">Conduct score follows the fair-play concept: yellow/red card deductions reduce the score. Leave as 0 if unknown. FIFA ranking is used as the final deterministic fallback in this simulator.</div><div id="settingsTeams" class="groups" style="margin-top:14px"></div></div></div>
-      </div>
-    </section>
-
-    <section id="tab-records" class="tabpane hidden">
-      <div class="records">
-        <div class="card"><div class="hd"><h2>Scenario Snapshots</h2><button class="danger" id="btnClearSnapshots">Clear Snapshots</button></div><div class="bd"><div id="snapshots" class="record-list"></div></div></div>
-        <div class="card"><div class="hd"><h2>Change Log</h2><button class="danger" id="btnClearLog">Clear Log</button></div><div class="bd"><div id="logs" class="record-list"></div></div></div>
+    <section id="tab-import" class="tabpane hidden">
+      <div class="card">
+        <div class="hd"><h2>Import JSON</h2><span class="pill blue">Optional</span></div>
+        <div class="bd grid" style="gap:14px">
+          <div class="note">
+            Import a simulator export, a simple match-result JSON, or a scoreboard JSON containing <span class="kbd">events</span>. Imported results can update group tables and apply knockout winners.
+          </div>
+          <input type="file" id="importJsonFileInput" accept="application/json,.json" class="hidden" />
+          <div class="actions">
+            <button id="btnImportJsonFile">Import JSON File</button>
+            <button class="ghost" id="btnApplyJsonText">Apply Pasted JSON</button>
+          </div>
+          <textarea id="importJsonText" placeholder='Paste JSON here. Example: {"groupMatches":[{"g":"A","a":"Czechia","b":"Mexico","ga":1,"gb":2}],"knockoutMatches":[{"a":"Brazil","b":"Morocco","winner":"Brazil"}]}'></textarea>
+          <div id="importJsonStatus" class="json-import-status">No JSON imported yet.</div>
+        </div>
       </div>
     </section>
 
     <div class="footer">
-      Sources used for structure: FIFA 2026 format/tie-break descriptions and published 2026 fixtures/bracket slots. This is a simulator, not an official FIFA product.
+      Static simulator for public use. Current tables are based on the uploaded result set; knockout selections are manual predictions unless imported from JSON.
     </div>
   </main>
 
@@ -159,7 +100,7 @@ const LOG_KEY = 'wc2026_simulator_log_v1';
 const MATRIX_KEY = 'wc2026_annex_c_matrix_v1';
 const WEB_RESULTS_SOURCE = 'ESPN scoreboard JSON';
 const WEB_SCOREBOARD_RANGE_URL = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260719&limit=250&groups=100';
-const CURRENT_RESULTS_VERSION = 'uploaded-2026-06-28-md3-fixed-ko-manual-v2';
+const CURRENT_RESULTS_VERSION = 'uploaded-2026-06-28-clean-public-ui-v1';
 
 const FLAGS = {
   'Mexico':'🇲🇽','South Korea':'🇰🇷','Czechia':'🇨🇿','South Africa':'🇿🇦','Canada':'🇨🇦','Switzerland':'🇨🇭','Bosnia and Herzegovina':'🇧🇦','Qatar':'🇶🇦','Brazil':'🇧🇷','Morocco':'🇲🇦','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Haiti':'🇭🇹','USA':'🇺🇸','Australia':'🇦🇺','Paraguay':'🇵🇾','Türkiye':'🇹🇷','Germany':'🇩🇪',"Côte d'Ivoire":'🇨🇮','Ecuador':'🇪🇨','Curaçao':'🇨🇼','Netherlands':'🇳🇱','Japan':'🇯🇵','Sweden':'🇸🇪','Tunisia':'🇹🇳','Egypt':'🇪🇬','Iran':'🇮🇷','Belgium':'🇧🇪','New Zealand':'🇳🇿','Spain':'🇪🇸','Uruguay':'🇺🇾','Cabo Verde':'🇨🇻','Saudi Arabia':'🇸🇦','France':'🇫🇷','Norway':'🇳🇴','Senegal':'🇸🇳','Iraq':'🇮🇶','Argentina':'🇦🇷','Austria':'🇦🇹','Algeria':'🇩🇿','Jordan':'🇯🇴','Colombia':'🇨🇴','Portugal':'🇵🇹','DR Congo':'🇨🇩','Uzbekistan':'🇺🇿','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Ghana':'🇬🇭','Croatia':'🇭🇷','Panama':'🇵🇦'
@@ -441,29 +382,22 @@ function init(){
 }
 function mergeState(saved){const d=defaultState();return {...d,...saved,mode:'manual',resultsVersion:saved.resultsVersion||CURRENT_RESULTS_VERSION,md3:{...d.md3,...(saved.md3||{})},winners:{...(saved.winners||{})},ranks:{...d.ranks,...(saved.ranks||{})},conduct:{...d.conduct,...(saved.conduct||{})},webResults:{...d.webResults,...(saved.webResults||{})}}}
 function setupEvents(){
-  document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.tabpane').forEach(x=>x.classList.add('hidden'));document.getElementById(b.dataset.tab).classList.remove('hidden');});
-  document.getElementById('btnRecalc')?.addEventListener('click',()=>{recalcAll();logEvent('recalculate','Manual recalculation');});
-  document.getElementById('btnAutoFillWeb')?.addEventListener('click',autoFillCurrentResultsFromWeb);
-  document.getElementById('btnAutoFillWebTop')?.addEventListener('click',autoFillCurrentResultsFromWeb);
-  document.getElementById('btnImportJsonTop')?.addEventListener('click',()=>document.getElementById('importJsonFileInput').click());
-  document.getElementById('btnImportJsonFile').onclick=()=>document.getElementById('importJsonFileInput').click();
-  document.getElementById('importJsonFileInput').onchange=handleImportJsonFile;
-  document.getElementById('btnApplyJsonText').onclick=()=>importJSONFromText(document.getElementById('importJsonText').value,'pasted JSON');
-  document.getElementById('btnDisableWebResults').onclick=()=>{state.useWebResults=false;state.webResults={...defaultState().webResults};state.winners={};
-  state.mode='manual';saveState();renderFixtures();recalcAll();updateWebSyncStatus('Manual/base results are active. Knockout predictions cleared.','warn');logEvent('web-sync','Disabled web result override');};
-  document.getElementById('btnEditMode')?.addEventListener('click',()=>setManualMode(true));
-  document.getElementById('btnEditModeTop')?.addEventListener('click',()=>setManualMode(true));
-  document.getElementById('btnCurrentResults')?.addEventListener('click',()=>setManualMode(false));
-  document.getElementById('btnCurrentResultsTop')?.addEventListener('click',()=>setManualMode(false));
-  document.getElementById('btnSnapshot').onclick=saveSnapshot;
-  document.getElementById('btnExport').onclick=exportJSON;
-  document.getElementById('btnReset').onclick=()=>{if(confirm('Reset to uploaded Matchday 3 results and clear knockout predictions?')){localStorage.removeItem(STORAGE_KEY);state=defaultState();renderFixtures();renderSettings();recalcAll();updateModeUI();logEvent('reset','Reset to uploaded MD3 results and cleared knockout predictions');}};
-  document.getElementById('btnLoadUploadedMd3').onclick=()=>loadUploadedMd3Results();
-  document.getElementById('btnDemoScores').onclick=()=>fillExampleScores();
-  document.getElementById('btnClearScores').onclick=()=>{Object.keys(state.md3).forEach(id=>state.md3[id]={a:null,b:null});state.winners={};saveState();renderFixtures();recalcAll();logEvent('clear-md3','Cleared Matchday 3 scores');};
-  document.getElementById('btnClearSnapshots').onclick=()=>{if(confirm('Clear saved snapshots?')){saveJSON(SNAP_KEY,[]);renderRecords();}};
-  document.getElementById('btnClearLog').onclick=()=>{if(confirm('Clear change log?')){saveJSON(LOG_KEY,[]);renderRecords();}};
-  document.getElementById('btnLoadMatrix').onclick=()=>loadAnnexMatrix(true);
+  const tabs=document.getElementById('tabs');
+  tabs?.addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;activateTab(b.dataset.tab);});
+
+  document.getElementById('btnImportJsonTop')?.addEventListener('click',()=>activateTab('tab-import'));
+  document.getElementById('btnImportJsonFile')?.addEventListener('click',()=>document.getElementById('importJsonFileInput')?.click());
+  const importFile=document.getElementById('importJsonFileInput');
+  if(importFile) importFile.onchange=handleImportJsonFile;
+  document.getElementById('btnApplyJsonText')?.addEventListener('click',()=>importJSONFromText(document.getElementById('importJsonText')?.value||'','pasted JSON'));
+
+  document.getElementById('btnExport')?.addEventListener('click',exportJSON);
+}
+function activateTab(tabId){
+  if(!tabId) return;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===tabId));
+  document.querySelectorAll('.tabpane').forEach(x=>x.classList.add('hidden'));
+  document.getElementById(tabId)?.classList.remove('hidden');
 }
 
 
@@ -744,7 +678,7 @@ function applyWebKnockoutWinners(knockoutMatches){
 async function loadAnnexMatrix(force){
   if(annexMatrixExact && !force){updateMatrixPill();return;}
   const pill=document.getElementById('matrixPill');
-  pill.textContent='Annex C: loading online matrix...'; pill.className='pill warn';
+  if(pill){pill.textContent='Annex C: loading online matrix...'; pill.className='pill warn';}
   try{
     const url='https://en.wikipedia.org/w/api.php?action=parse&page=Template:2026_FIFA_World_Cup_third-place_table&prop=text&format=json&origin=*';
     const res=await fetch(url,{cache:'no-store'});
@@ -770,6 +704,7 @@ async function loadAnnexMatrix(force){
 }
 function updateMatrixPill(err){
   const pill=document.getElementById('matrixPill');
+  if(!pill) return;
   const n=Object.keys(annexMatrix).length;
   if(n>0){pill.textContent='Annex C: exact matrix cached ('+n+' rows)';pill.className='pill green';}
   else{pill.textContent='Annex C: fallback solver active'+(err?' · '+err:'');pill.className='pill warn';}
@@ -777,6 +712,7 @@ function updateMatrixPill(err){
 
 function renderFixtures(){
   const el=document.getElementById('fixtures');
+  if(!el) return;
   const manual=isManualMode();
   el.innerHTML=MD3_FIXTURES.map(f=>{
     const v=state.md3[f.id]||{a:null,b:null};
@@ -803,6 +739,7 @@ function renderFixtures(){
 
 function renderSettings(){
   const el=document.getElementById('settingsTeams');
+  if(!el) return;
   const manual=isManualMode();
   el.innerHTML=Object.entries(GROUPS).map(([g,teams])=>`<div class="card"><div class="hd"><h3>Group ${g}</h3></div><div class="bd fieldgrid">${teams.map(t=>`<label>${esc(flag(t))}<span>FIFA Rank</span><input type="number" min="1" data-rank="${esc(t)}" value="${state.ranks[t]??99}" ${manual?'':'disabled'}><span>Conduct Score</span><input type="number" data-conduct="${esc(t)}" value="${state.conduct[t]??0}" ${manual?'':'disabled'}></label>`).join('')}</div></div>`).join('');
   if(!manual) return;
@@ -869,7 +806,7 @@ function recalcAll(){
   const thirds=rankThirds(calc.tables);
   const complete=state.useWebResults ? Object.values(calc.tables).every(rows=>rows.every(r=>r.mp>=3)) : MD3_FIXTURES.every(f=>state.md3[f.id]?.a!==null && state.md3[f.id]?.b!==null);
   const qualifiedThirdGroups=thirds.slice(0,8).map(x=>x.group).sort().join('');
-  const thirdMap=complete?assignThirdSlots(qualifiedThirdGroups):{map:{},exact:false,warning:'Enter all Matchday 3 scores to lock the bracket.'};
+  const thirdMap=complete?assignThirdSlots(qualifiedThirdGroups):{map:{},exact:false,warning:'Complete all current group scores to lock the bracket.'};
   const slotTeams={};
   Object.entries(calc.tables).forEach(([g,rows])=>{slotTeams['1'+g]=rows[0].team; slotTeams['2'+g]=rows[1].team; slotTeams['3'+g]=rows[2].team;});
   if(complete){Object.entries(thirdMap.map).forEach(([winnerGroup,thirdGroup])=>{slotTeams['3_for_'+winnerGroup]=slotTeams['3'+thirdGroup];});}
@@ -906,19 +843,19 @@ function fallbackAssign(groups){
 }
 
 function renderGroups(){
-  const el=document.getElementById('groups'); if(!computed) return;
+  const el=document.getElementById('groups'); if(!computed || !el) return;
   el.innerHTML=Object.entries(computed.tables).map(([g,rows])=>`<div class="card"><div class="hd"><h3>Group ${g}</h3><span class="pill">${rows[0].mp}/3 MP</span></div><div class="bd"><table><thead><tr><th>#</th><th>Team</th><th>MP</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th></tr></thead><tbody>${rows.map((r,i)=>`<tr class="${i<2?'qualify':(i===2&&computed.thirds.slice(0,8).some(t=>t.team===r.team)?'third-ok':'')}"><td class="rank">${i+1}</td><td>${esc(flag(r.team))}</td><td>${r.mp}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td>${r.gf}</td><td>${r.ga}</td><td>${r.gd}</td><td><strong>${r.pts}</strong></td></tr>`).join('')}</tbody></table></div></div>`).join('');
 }
 function renderThirdTable(){
-  const el=document.getElementById('thirdTable'); if(!computed) return;
+  const el=document.getElementById('thirdTable'); if(!computed || !el) return;
   el.innerHTML=`<thead><tr><th>#</th><th>Group</th><th>Team</th><th>Pts</th><th>GD</th><th>GF</th><th>Conduct</th><th>Rank</th><th>Status</th></tr></thead><tbody>${computed.thirds.map((r,i)=>`<tr class="${i<8?'third-ok':''}"><td>${i+1}</td><td>${r.group}</td><td>${esc(flag(r.team))}</td><td><strong>${r.pts}</strong></td><td>${r.gd}</td><td>${r.gf}</td><td>${r.conduct??0}</td><td>${r.rank??99}</td><td>${i<8?'<span class="pill warn">Advance</span>':'Out'}</td></tr>`).join('')}</tbody>`;
 }
 function renderSummary(){
-  const el=document.getElementById('summary'); if(!computed) return;
+  const el=document.getElementById('summary'); if(!computed || !el) return;
   const topTwo=Object.entries(computed.tables).flatMap(([g,rows])=>rows.slice(0,2).map((r,i)=>`${i+1}${g}: ${flag(r.team)}`));
   const thirds=computed.thirds.slice(0,8).map(r=>`3${r.group}: ${flag(r.team)}`);
-  document.getElementById('qCount').textContent=(topTwo.length+thirds.length)+' qualified';
-  el.innerHTML=`<div class="grid" style="gap:12px"><div><span class="pill green">Top two from each group</span><p class="small">${esc(topTwo.join(' · '))}</p></div><div><span class="pill warn">Best third-place teams</span><p class="small">${esc(thirds.join(' · '))}</p></div>${computed.complete?`<div><span class="pill ${computed.thirdMap.exact?'green':'warn'}">Third-place slot assignment: ${computed.thirdMap.exact?'Annex C exact':'Fallback'}</span><p class="small">Qualified third groups: <strong>${computed.qualifiedThirdGroups}</strong>. ${computed.thirdMap.warning?esc(computed.thirdMap.warning):'Exact matrix row applied.'}</p></div>`:`<div class="note warnbox">Enter all 24 Matchday 3 scores to finalize the Round of 32 bracket.</div>`}</div>`;
+  const q=document.getElementById('qCount'); if(q) q.textContent=(topTwo.length+thirds.length)+' qualified';
+  el.innerHTML=`<div class="grid" style="gap:12px"><div><span class="pill green">Top two from each group</span><p class="small">${esc(topTwo.join(' · '))}</p></div><div><span class="pill warn">Best third-place teams</span><p class="small">${esc(thirds.join(' · '))}</p></div>${computed.complete?`<div><span class="pill ${computed.thirdMap.exact?'green':'warn'}">Third-place slot assignment: ${computed.thirdMap.exact?'Annex C exact':'Fallback'}</span><p class="small">Qualified third groups: <strong>${computed.qualifiedThirdGroups}</strong>. ${computed.thirdMap.warning?esc(computed.thirdMap.warning):'Exact matrix row applied.'}</p></div>`:`<div class="note warnbox">Complete all current group scores to finalize the Round of 32 bracket.</div>`}</div>`;
 }
 
 function resolveRef(ref){
@@ -946,7 +883,8 @@ function pruneWinners(){
 }
 function renderBracket(){
   const status=document.getElementById('bracketStatus'); const el=document.getElementById('bracket');
-  if(!computed?.complete){status.textContent='Waiting for all MD3 scores'; status.className='pill warn'; el.innerHTML='<div class="note warnbox">Complete Matchday 3 scores first.</div>';return;}
+  if(!status || !el) return;
+  if(!computed?.complete){status.textContent='Waiting for current results'; status.className='pill warn'; el.innerHTML='<div class="note warnbox">Complete current group scores first.</div>';return;}
   status.textContent=computed.thirdMap.exact?'Annex C exact bracket':'Fallback bracket'; status.className='pill '+(computed.thirdMap.exact?'green':'warn');
 
   const matchMap={};
@@ -1027,13 +965,25 @@ function saveSnapshot(){
   saveJSON(SNAP_KEY,snaps.slice(0,50)); renderRecords(); logEvent('snapshot',`Saved snapshot${champ?' · Champion: '+champ:''}`);
 }
 function renderRecords(){
+  const snapEl=document.getElementById('snapshots');
+  const logEl=document.getElementById('logs');
+  if(!snapEl && !logEl) return;
   const snaps=loadJSON(SNAP_KEY,[]); const logs=loadJSON(LOG_KEY,[]);
-  document.getElementById('snapshots').innerHTML=snaps.length?snaps.map(s=>`<div class="record"><strong>${new Date(s.at).toLocaleString()}</strong><div class="small">Champion: ${s.champion?esc(flag(s.champion)):'Not selected'}<br>Third groups: ${esc(s.qualifiedThirdGroups||'-')}</div><button data-loadsnap="${s.id}">Load Snapshot</button></div>`).join(''):'<div class="small">No saved snapshots yet.</div>';
-  document.querySelectorAll('[data-loadsnap]').forEach(b=>b.onclick=()=>{const snap=snaps.find(s=>s.id===b.dataset.loadsnap); if(snap){state.mode='manual';state.md3=snap.md3;state.winners=snap.winners||{};saveState();renderFixtures();recalcAll();updateModeUI();logEvent('load-snapshot',snap.id);}});
-  document.getElementById('logs').innerHTML=logs.length?logs.map(l=>`<div class="logline">${new Date(l.at).toLocaleString()}  [${l.type}] ${esc(l.details)}</div>`).join(''):'<div class="small">No changes recorded yet.</div>';
+  if(snapEl){
+    snapEl.innerHTML=snaps.length?snaps.map(s=>`<div class="record"><strong>${new Date(s.at).toLocaleString()}</strong><div class="small">Champion: ${s.champion?esc(flag(s.champion)):'Not selected'}<br>Third groups: ${esc(s.qualifiedThirdGroups||'-')}</div><button data-loadsnap="${s.id}">Load Snapshot</button></div>`).join(''):'<div class="small">No saved snapshots yet.</div>';
+    document.querySelectorAll('[data-loadsnap]').forEach(b=>b.onclick=()=>{const snap=snaps.find(s=>s.id===b.dataset.loadsnap); if(snap){state.mode='manual';state.md3=snap.md3;state.winners=snap.winners||{};saveState();renderFixtures();recalcAll();updateModeUI();logEvent('load-snapshot',snap.id);}});
+  }
+  if(logEl){
+    logEl.innerHTML=logs.length?logs.map(l=>`<div class="logline">${new Date(l.at).toLocaleString()}  [${l.type}] ${esc(l.details)}</div>`).join(''):'<div class="small">No changes recorded yet.</div>';
+  }
 }
+
 function exportJSON(){
-  const payload={exportedAt:new Date().toISOString(),state,computed:{qualifiedThirdGroups:computed?.qualifiedThirdGroups,thirdMap:computed?.thirdMap,champion:getWinner(104),tables:computed?.tables,thirds:computed?.thirds},snapshots:loadJSON(SNAP_KEY,[]),logs:loadJSON(LOG_KEY,[])};
+  const payload={
+    exportedAt:new Date().toISOString(),
+    state:{md3:state.md3,winners:state.winners,ranks:state.ranks,conduct:state.conduct},
+    computed:{qualifiedThirdGroups:computed?.qualifiedThirdGroups,thirdMap:computed?.thirdMap,champion:getWinner(104),tables:computed?.tables,thirds:computed?.thirds}
+  };
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='wc2026-simulator-export.json';a.click();URL.revokeObjectURL(a.href);logEvent('export','Exported JSON');
 }
