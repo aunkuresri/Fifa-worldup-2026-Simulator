@@ -92,6 +92,7 @@
               <div id="importJsonStatus" class="json-import-status">No JSON imported yet.</div>
             </div>
             <div class="actions">
+              <button class="success" id="btnLoadUploadedMd3">Load Uploaded MD3 Results</button>
               <button id="btnDemoScores">Fill Example Scores</button>
               <button id="btnClearScores">Clear MD3 Scores</button>
             </div>
@@ -272,6 +273,105 @@ const NEXT_ROUNDS = [
   {name:'Final', matches:[{m:104,l:101,r:102}]}
 ];
 
+const UPLOADED_MD3_RESULTS = {
+  "A1": {
+    "a": 0,
+    "b": 3
+  },
+  "A2": {
+    "a": 1,
+    "b": 0
+  },
+  "B1": {
+    "a": 2,
+    "b": 1
+  },
+  "B2": {
+    "a": 3,
+    "b": 1
+  },
+  "C1": {
+    "a": 0,
+    "b": 3
+  },
+  "C2": {
+    "a": 4,
+    "b": 2
+  },
+  "E1": {
+    "a": 2,
+    "b": 1
+  },
+  "E2": {
+    "a": 0,
+    "b": 2
+  },
+  "F1": {
+    "a": 1,
+    "b": 1
+  },
+  "F2": {
+    "a": 1,
+    "b": 3
+  },
+  "D1": {
+    "a": 3,
+    "b": 2
+  },
+  "D2": {
+    "a": 0,
+    "b": 0
+  },
+  "I1": {
+    "a": 1,
+    "b": 4
+  },
+  "I2": {
+    "a": 5,
+    "b": 0
+  },
+  "H1": {
+    "a": 0,
+    "b": 0
+  },
+  "H2": {
+    "a": 0,
+    "b": 1
+  },
+  "G1": {
+    "a": 1,
+    "b": 1
+  },
+  "G2": {
+    "a": 1,
+    "b": 5
+  },
+  "L1": {
+    "a": 0,
+    "b": 2
+  },
+  "L2": {
+    "a": 2,
+    "b": 1
+  },
+  "K1": {
+    "a": 0,
+    "b": 0
+  },
+  "K2": {
+    "a": 3,
+    "b": 1
+  },
+  "J1": {
+    "a": 3,
+    "b": 3
+  },
+  "J2": {
+    "a": 1,
+    "b": 3
+  }
+};
+
 let state = defaultState();
 let computed = null;
 let annexMatrix = loadJSON(MATRIX_KEY, {});
@@ -280,8 +380,12 @@ let annexMatrixExact = Object.keys(annexMatrix).length > 0;
 function defaultState(){
   const ranks = {}; const conduct = {};
   Object.values(GROUPS).flat().forEach(t=>{ranks[t]=FIFA_RANK_DEFAULT[t] || 99; conduct[t]=0;});
-  const md3 = {}; MD3_FIXTURES.forEach(f=>md3[f.id]={a:null,b:null});
-  return {md3, winners:{}, ranks, conduct, useWebResults:false, webResults:{fetchedAt:null, source:null, groupMatches:[], knockoutMatches:[], rawEventCount:0}, lastSaved:new Date().toISOString()};
+  const md3 = {};
+  MD3_FIXTURES.forEach(f=>{
+    const preset = UPLOADED_MD3_RESULTS[f.id];
+    md3[f.id] = preset ? {a:preset.a,b:preset.b} : {a:null,b:null};
+  });
+  return {md3, winners:{}, ranks, conduct, useWebResults:false, webResults:{fetchedAt:null, source:null, groupMatches:[], knockoutMatches:[], rawEventCount:0}, lastSaved:new Date().toISOString(), md3Preset:'uploaded-2026-06-28'};
 }
 function loadJSON(key,fallback){try{return JSON.parse(localStorage.getItem(key)) ?? fallback}catch{return fallback}}
 function saveJSON(key,value){localStorage.setItem(key,JSON.stringify(value));}
@@ -309,6 +413,7 @@ function setupEvents(){
   document.getElementById('btnSnapshot').onclick=saveSnapshot;
   document.getElementById('btnExport').onclick=exportJSON;
   document.getElementById('btnReset').onclick=()=>{if(confirm('Reset scores, winners, settings and local state?')){localStorage.removeItem(STORAGE_KEY);state=defaultState();renderFixtures();renderSettings();recalcAll();logEvent('reset','Reset all simulator state');}};
+  document.getElementById('btnLoadUploadedMd3').onclick=()=>loadUploadedMd3Results();
   document.getElementById('btnDemoScores').onclick=()=>fillExampleScores();
   document.getElementById('btnClearScores').onclick=()=>{Object.keys(state.md3).forEach(id=>state.md3[id]={a:null,b:null});state.winners={};saveState();renderFixtures();recalcAll();logEvent('clear-md3','Cleared Matchday 3 scores');};
   document.getElementById('btnClearSnapshots').onclick=()=>{if(confirm('Clear saved snapshots?')){saveJSON(SNAP_KEY,[]);renderRecords();}};
@@ -845,6 +950,21 @@ function removeDownstreamWinners(changed){
   NEXT_ROUNDS.forEach(round=>round.matches.forEach(x=>{dependencies[x.m]=[x.l,x.r].filter(v=>typeof v==='number').concat([x.l,x.r].filter(v=>typeof v==='string'&&v.startsWith('L')).map(v=>parseInt(v.slice(1),10)));}));
   let dirty=new Set([changed]); let changedLoop=true;
   while(changedLoop){changedLoop=false;for(const [m,deps] of Object.entries(dependencies)){if(deps.some(d=>dirty.has(d)) && state.winners[m]){delete state.winners[m];dirty.add(parseInt(m,10));changedLoop=true;}}}
+}
+
+function loadUploadedMd3Results(){
+  MD3_FIXTURES.forEach(f=>{
+    const preset = UPLOADED_MD3_RESULTS[f.id];
+    state.md3[f.id] = preset ? {a:preset.a,b:preset.b} : {a:null,b:null};
+  });
+  state.useWebResults=false;
+  state.webResults={...defaultState().webResults};
+  state.winners={};
+  saveState();
+  renderFixtures();
+  recalcAll();
+  updateWebSyncStatus('Uploaded Matchday 3 results are active. Web result override disabled.','ok');
+  logEvent('preset-md3','Loaded uploaded Matchday 3 results');
 }
 
 function fillExampleScores(){
