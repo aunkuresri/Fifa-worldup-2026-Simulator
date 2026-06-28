@@ -38,8 +38,8 @@
           <p class="subtitle">Base table: after two group matches. Enter Matchday 3 goals, calculate qualifiers under FIFA-style ranking rules, then pick winners from Round of 32 to Final. All changes are saved in this browser.</p>
         </div>
         <div class="actions">
-          <button class="primary" id="btnEditModeTop">Edit / Simulate Manually</button>
-          <button class="ghost" id="btnCurrentResultsTop">Current Results</button>
+          <button class="primary" id="btnEditModeTop" disabled>Manual Mode Active</button>
+          <button class="ghost" id="btnCurrentResultsTop">Reset to Current Results</button>
           <button class="success" id="btnSnapshot">Save Snapshot</button>
           <button id="btnExport">Export JSON</button>
           <button class="danger" id="btnReset">Reset to Current</button>
@@ -63,7 +63,7 @@
           <div class="bd grid" style="gap:14px">
             <div class="note">
               <strong>Current result view</strong><br>
-              The uploaded Matchday 3 results are loaded automatically. Tables and bracket are visible immediately. Click <strong>Edit / Simulate Manually</strong> only when you want to change scores or select different knockout winners.
+              The uploaded Matchday 3 results are loaded automatically. The knockout bracket starts blank and is always editable for manual simulation.
             </div>
             <div class="matrix-status">
               <span class="pill" id="matrixPill">Annex C: checking...</span>
@@ -92,13 +92,13 @@
             </div>
             <div class="mode-panel">
               <div class="matrix-status">
-                <span class="pill green" id="modePill">Current results locked</span>
-                <button class="primary" id="btnEditMode">Edit / Simulate Manually</button>
-                <button class="ghost" id="btnCurrentResults">Back to Current Results</button>
+                <span class="pill warn" id="modePill">Manual simulation mode</span>
+                <button class="primary" id="btnEditMode" disabled>Manual Mode Active</button>
+                <button class="ghost" id="btnCurrentResults">Reset to Current Results</button>
               </div>
-              <div class="small" style="margin-top:8px">Current results are fixed from the uploaded JSON. Manual editing unlocks score boxes and knockout winner buttons for personal simulation.</div>
+              <div class="small" style="margin-top:8px">Matchday 3 starts from the uploaded current results. Knockout results are reset and winner buttons are active for manual prediction.</div>
             </div>
-            <div class="actions manual-only hidden-control">
+            <div class="actions manual-only">
               <button class="success" id="btnLoadUploadedMd3">Load Uploaded MD3 Results</button>
               <button id="btnDemoScores">Fill Example Scores</button>
               <button id="btnClearScores">Clear MD3 Scores</button>
@@ -159,7 +159,7 @@ const LOG_KEY = 'wc2026_simulator_log_v1';
 const MATRIX_KEY = 'wc2026_annex_c_matrix_v1';
 const WEB_RESULTS_SOURCE = 'ESPN scoreboard JSON';
 const WEB_SCOREBOARD_RANGE_URL = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260719&limit=250&groups=100';
-const CURRENT_RESULTS_VERSION = 'uploaded-2026-06-28';
+const CURRENT_RESULTS_VERSION = 'uploaded-2026-06-28-md3-fixed-ko-manual-v2';
 
 const FLAGS = {
   'Mexico':'🇲🇽','South Korea':'🇰🇷','Czechia':'🇨🇿','South Africa':'🇿🇦','Canada':'🇨🇦','Switzerland':'🇨🇭','Bosnia and Herzegovina':'🇧🇦','Qatar':'🇶🇦','Brazil':'🇧🇷','Morocco':'🇲🇦','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Haiti':'🇭🇹','USA':'🇺🇸','Australia':'🇦🇺','Paraguay':'🇵🇾','Türkiye':'🇹🇷','Germany':'🇩🇪',"Côte d'Ivoire":'🇨🇮','Ecuador':'🇪🇨','Curaçao':'🇨🇼','Netherlands':'🇳🇱','Japan':'🇯🇵','Sweden':'🇸🇪','Tunisia':'🇹🇳','Egypt':'🇪🇬','Iran':'🇮🇷','Belgium':'🇧🇪','New Zealand':'🇳🇿','Spain':'🇪🇸','Uruguay':'🇺🇾','Cabo Verde':'🇨🇻','Saudi Arabia':'🇸🇦','France':'🇫🇷','Norway':'🇳🇴','Senegal':'🇸🇳','Iraq':'🇮🇶','Argentina':'🇦🇷','Austria':'🇦🇹','Algeria':'🇩🇿','Jordan':'🇯🇴','Colombia':'🇨🇴','Portugal':'🇵🇹','DR Congo':'🇨🇩','Uzbekistan':'🇺🇿','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Ghana':'🇬🇭','Croatia':'🇭🇷','Panama':'🇵🇦'
@@ -408,7 +408,7 @@ function defaultState(){
     const preset = UPLOADED_MD3_RESULTS[f.id];
     md3[f.id] = preset ? {a:preset.a,b:preset.b} : {a:null,b:null};
   });
-  return {mode:'current', resultsVersion:CURRENT_RESULTS_VERSION, md3, winners:{...UPLOADED_KNOCKOUT_WINNERS}, ranks, conduct, useWebResults:false, webResults:{fetchedAt:null, source:null, groupMatches:[], knockoutMatches:[], rawEventCount:0}, lastSaved:new Date().toISOString(), md3Preset:CURRENT_RESULTS_VERSION};
+  return {mode:'manual', resultsVersion:CURRENT_RESULTS_VERSION, md3, winners:{}, ranks, conduct, useWebResults:false, webResults:{fetchedAt:null, source:null, groupMatches:[], knockoutMatches:[], rawEventCount:0}, lastSaved:new Date().toISOString(), md3Preset:CURRENT_RESULTS_VERSION};
 }
 function loadJSON(key,fallback){try{return JSON.parse(localStorage.getItem(key)) ?? fallback}catch{return fallback}}
 function saveJSON(key,value){localStorage.setItem(key,JSON.stringify(value));}
@@ -417,9 +417,21 @@ function logEvent(type,details){const logs=loadJSON(LOG_KEY,[]);logs.unshift({at
 function esc(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
 function flag(t){return (FLAGS[t]||'')+' '+t}
 function teamName(ref){return computed?.slotTeams?.[ref] || ref;}
-function isManualMode(){return state?.mode === 'manual';}
-function setManualMode(enabled){state.mode=enabled?'manual':'current';if(!enabled){const base=defaultState();state={...base,ranks:{...state.ranks},conduct:{...state.conduct}};}else{state.resultsVersion=CURRENT_RESULTS_VERSION;}saveState();renderFixtures();renderSettings();recalcAll();updateModeUI();}
-function updateModeUI(){const manual=isManualMode();const text=manual?'Manual simulation mode':'Current results locked';const cls=manual?'pill warn':'pill green';['modePill'].forEach(id=>{const el=document.getElementById(id);if(el){el.textContent=text;el.className=cls;}});['btnEditMode','btnEditModeTop'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=manual?'Manual Mode Active':'Edit / Simulate Manually';});}
+function isManualMode(){return true;}
+function setManualMode(enabled){
+  // The simulator now always stays editable/manual. Calling this with false resets
+  // Matchday 3 to the uploaded current results and clears knockout predictions.
+  const keepRanks={...state.ranks};
+  const keepConduct={...state.conduct};
+  const base=defaultState();
+  if(enabled){state.mode='manual';state.resultsVersion=CURRENT_RESULTS_VERSION;}
+  else{state={...base,ranks:keepRanks,conduct:keepConduct};}
+  saveState();renderFixtures();renderSettings();recalcAll();updateModeUI();
+}
+function updateModeUI(){
+  ['modePill'].forEach(id=>{const el=document.getElementById(id);if(el){el.textContent='Manual simulation mode';el.className='pill warn';}});
+  ['btnEditMode','btnEditModeTop'].forEach(id=>{const el=document.getElementById(id);if(el){el.textContent='Manual Mode Active';el.disabled=true;}});
+}
 
 function init(){
   const saved = loadJSON(STORAGE_KEY,null);
@@ -427,7 +439,7 @@ function init(){
   else state = defaultState();
   renderFixtures(); renderSettings(); recalcAll(); renderRecords(); setupEvents(); updateMatrixPill(); updateWebSyncStatus(); updateModeUI(); loadAnnexMatrix(false);
 }
-function mergeState(saved){const d=defaultState();return {...d,...saved,mode:saved.mode||'current',resultsVersion:saved.resultsVersion||CURRENT_RESULTS_VERSION,md3:{...d.md3,...(saved.md3||{})},winners:{...(saved.winners||{})},ranks:{...d.ranks,...(saved.ranks||{})},conduct:{...d.conduct,...(saved.conduct||{})},webResults:{...d.webResults,...(saved.webResults||{})}}}
+function mergeState(saved){const d=defaultState();return {...d,...saved,mode:'manual',resultsVersion:saved.resultsVersion||CURRENT_RESULTS_VERSION,md3:{...d.md3,...(saved.md3||{})},winners:{...(saved.winners||{})},ranks:{...d.ranks,...(saved.ranks||{})},conduct:{...d.conduct,...(saved.conduct||{})},webResults:{...d.webResults,...(saved.webResults||{})}}}
 function setupEvents(){
   document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.tabpane').forEach(x=>x.classList.add('hidden'));document.getElementById(b.dataset.tab).classList.remove('hidden');});
   document.getElementById('btnRecalc')?.addEventListener('click',()=>{recalcAll();logEvent('recalculate','Manual recalculation');});
@@ -437,15 +449,15 @@ function setupEvents(){
   document.getElementById('btnImportJsonFile').onclick=()=>document.getElementById('importJsonFileInput').click();
   document.getElementById('importJsonFileInput').onchange=handleImportJsonFile;
   document.getElementById('btnApplyJsonText').onclick=()=>importJSONFromText(document.getElementById('importJsonText').value,'pasted JSON');
-  document.getElementById('btnDisableWebResults').onclick=()=>{state.useWebResults=false;state.webResults={...defaultState().webResults};state.winners={...UPLOADED_KNOCKOUT_WINNERS};
-  state.mode='current';saveState();renderFixtures();recalcAll();updateWebSyncStatus('Manual/base results are active.','warn');logEvent('web-sync','Disabled web result override');};
+  document.getElementById('btnDisableWebResults').onclick=()=>{state.useWebResults=false;state.webResults={...defaultState().webResults};state.winners={};
+  state.mode='manual';saveState();renderFixtures();recalcAll();updateWebSyncStatus('Manual/base results are active. Knockout predictions cleared.','warn');logEvent('web-sync','Disabled web result override');};
   document.getElementById('btnEditMode')?.addEventListener('click',()=>setManualMode(true));
   document.getElementById('btnEditModeTop')?.addEventListener('click',()=>setManualMode(true));
   document.getElementById('btnCurrentResults')?.addEventListener('click',()=>setManualMode(false));
   document.getElementById('btnCurrentResultsTop')?.addEventListener('click',()=>setManualMode(false));
   document.getElementById('btnSnapshot').onclick=saveSnapshot;
   document.getElementById('btnExport').onclick=exportJSON;
-  document.getElementById('btnReset').onclick=()=>{if(confirm('Reset to fixed current results?')){localStorage.removeItem(STORAGE_KEY);state=defaultState();renderFixtures();renderSettings();recalcAll();updateModeUI();logEvent('reset','Reset to fixed current results');}};
+  document.getElementById('btnReset').onclick=()=>{if(confirm('Reset to uploaded Matchday 3 results and clear knockout predictions?')){localStorage.removeItem(STORAGE_KEY);state=defaultState();renderFixtures();renderSettings();recalcAll();updateModeUI();logEvent('reset','Reset to uploaded MD3 results and cleared knockout predictions');}};
   document.getElementById('btnLoadUploadedMd3').onclick=()=>loadUploadedMd3Results();
   document.getElementById('btnDemoScores').onclick=()=>fillExampleScores();
   document.getElementById('btnClearScores').onclick=()=>{Object.keys(state.md3).forEach(id=>state.md3[id]={a:null,b:null});state.winners={};saveState();renderFixtures();recalcAll();logEvent('clear-md3','Cleared Matchday 3 scores');};
@@ -998,8 +1010,8 @@ function loadUploadedMd3Results(){
   renderSettings();
   recalcAll();
   updateModeUI();
-  updateWebSyncStatus('Fixed uploaded current results are active.','ok');
-  logEvent('preset-md3','Loaded fixed uploaded current results');
+  updateWebSyncStatus('Uploaded Matchday 3 results loaded. Knockout predictions cleared.','ok');
+  logEvent('preset-md3','Loaded uploaded MD3 results and cleared knockout predictions');
 }
 
 function fillExampleScores(){
