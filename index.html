@@ -82,7 +82,7 @@ const LOG_KEY = 'wc2026_simulator_log_v1';
 const MATRIX_KEY = 'wc2026_annex_c_matrix_v1';
 const WEB_RESULTS_SOURCE = 'ESPN scoreboard JSON';
 const WEB_SCOREBOARD_RANGE_URL = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260719&limit=250&groups=100';
-const CURRENT_RESULTS_VERSION = 'uploaded-2026-06-28-best-third-ranking-v2';
+const CURRENT_RESULTS_VERSION = 'uploaded-2026-06-28-best-third-ranking-v3-bracket-fixed';
 
 const FLAGS = {
   'Mexico':'🇲🇽','South Korea':'🇰🇷','Czechia':'🇨🇿','South Africa':'🇿🇦','Canada':'🇨🇦','Switzerland':'🇨🇭','Bosnia and Herzegovina':'🇧🇦','Qatar':'🇶🇦','Brazil':'🇧🇷','Morocco':'🇲🇦','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Haiti':'🇭🇹','USA':'🇺🇸','Australia':'🇦🇺','Paraguay':'🇵🇾','Türkiye':'🇹🇷','Germany':'🇩🇪',"Côte d'Ivoire":'🇨🇮','Ecuador':'🇪🇨','Curaçao':'🇨🇼','Netherlands':'🇳🇱','Japan':'🇯🇵','Sweden':'🇸🇪','Tunisia':'🇹🇳','Egypt':'🇪🇬','Iran':'🇮🇷','Belgium':'🇧🇪','New Zealand':'🇳🇿','Spain':'🇪🇸','Uruguay':'🇺🇾','Cabo Verde':'🇨🇻','Saudi Arabia':'🇸🇦','France':'🇫🇷','Norway':'🇳🇴','Senegal':'🇸🇳','Iraq':'🇮🇶','Argentina':'🇦🇷','Austria':'🇦🇹','Algeria':'🇩🇿','Jordan':'🇯🇴','Colombia':'🇨🇴','Portugal':'🇵🇹','DR Congo':'🇨🇩','Uzbekistan':'🇺🇿','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Ghana':'🇬🇭','Croatia':'🇭🇷','Panama':'🇵🇦'
@@ -192,6 +192,14 @@ const THIRD_SLOT_CANDIDATES = {
   L:['E','H','I','J','K']
 };
 const THIRD_SLOT_ORDER = ['A','B','D','E','G','I','K','L'];
+
+
+// Fixed current-result third-place assignment for the qualified third-place groups
+// B, D, E, F, I, J, K, L. This prevents the browser fallback/cache from placing
+// Bosnia and Herzegovina against Germany. Germany (1E) must face Paraguay (3D).
+const CURRENT_THIRD_SLOT_ASSIGNMENTS = {
+  BDEFIJKL: { A:'E', B:'J', D:'B', E:'D', G:'I', I:'F', K:'L', L:'K' }
+};
 
 const ROUND_OF_32 = [
   {m:73, label:'R32 M73', left:'2A', right:'2B', meta:'28 Jun · Inglewood'},
@@ -821,6 +829,9 @@ function recalcAll(){
   pruneWinners(); saveState(); renderGroups(); renderSummary(); renderThirdTable(); renderBracket();
 }
 function assignThirdSlots(key){
+  if(CURRENT_THIRD_SLOT_ASSIGNMENTS[key]){
+    return {map:{...CURRENT_THIRD_SLOT_ASSIGNMENTS[key]}, exact:true, warning:null};
+  }
   if(annexMatrix[key]){
     const map={}; THIRD_SLOT_ORDER.forEach((slot,i)=>map[slot]=annexMatrix[key][i]);
     return {map, exact:true, warning:null};
