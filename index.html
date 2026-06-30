@@ -55,7 +55,7 @@
       <div class="grid" style="gap:16px">
         <div class="two-col">
           <div class="card"><div class="hd"><h2>Qualification Summary</h2><span class="pill green" id="qCount">0 qualified</span></div><div class="bd" id="summary"></div></div>
-          <div class="card"><div class="hd"><h2>Best Third-Place Table</h2><span class="pill warn">Top 8 advance</span></div><div class="bd third-table"><table id="thirdTable"></table></div></div>
+          <div class="card"><div class="hd"><h2>Best 3rd Placed Teams</h2><span class="pill warn">Top 8 advance</span></div><div class="bd third-table"><table id="thirdTable"></table></div></div>
         </div>
         <div class="card"><div class="hd"><h2>Updated Group Tables</h2><span class="pill">Current result</span></div><div class="bd"><div id="groups" class="groups"></div></div></div>
       </div>
@@ -82,7 +82,7 @@ const LOG_KEY = 'wc2026_simulator_log_v1';
 const MATRIX_KEY = 'wc2026_annex_c_matrix_v1';
 const WEB_RESULTS_SOURCE = 'ESPN scoreboard JSON';
 const WEB_SCOREBOARD_RANGE_URL = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260719&limit=250&groups=100';
-const CURRENT_RESULTS_VERSION = 'uploaded-2026-06-28-clean-public-ui-v1';
+const CURRENT_RESULTS_VERSION = 'uploaded-2026-06-28-best-third-ranking-v2';
 
 const FLAGS = {
   'Mexico':'🇲🇽','South Korea':'🇰🇷','Czechia':'🇨🇿','South Africa':'🇿🇦','Canada':'🇨🇦','Switzerland':'🇨🇭','Bosnia and Herzegovina':'🇧🇦','Qatar':'🇶🇦','Brazil':'🇧🇷','Morocco':'🇲🇦','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Haiti':'🇭🇹','USA':'🇺🇸','Australia':'🇦🇺','Paraguay':'🇵🇾','Türkiye':'🇹🇷','Germany':'🇩🇪',"Côte d'Ivoire":'🇨🇮','Ecuador':'🇪🇨','Curaçao':'🇨🇼','Netherlands':'🇳🇱','Japan':'🇯🇵','Sweden':'🇸🇪','Tunisia':'🇹🇳','Egypt':'🇪🇬','Iran':'🇮🇷','Belgium':'🇧🇪','New Zealand':'🇳🇿','Spain':'🇪🇸','Uruguay':'🇺🇾','Cabo Verde':'🇨🇻','Saudi Arabia':'🇸🇦','France':'🇫🇷','Norway':'🇳🇴','Senegal':'🇸🇳','Iraq':'🇮🇶','Argentina':'🇦🇷','Austria':'🇦🇹','Algeria':'🇩🇿','Jordan':'🇯🇴','Colombia':'🇨🇴','Portugal':'🇵🇹','DR Congo':'🇨🇩','Uzbekistan':'🇺🇿','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Ghana':'🇬🇭','Croatia':'🇭🇷','Panama':'🇵🇦'
@@ -90,6 +90,22 @@ const FLAGS = {
 
 const FIFA_RANK_DEFAULT = {
   'Spain':1,'Argentina':2,'France':3,'England':4,'Brazil':5,'Portugal':6,'Netherlands':7,'Belgium':8,'Germany':9,'Croatia':10,'Morocco':11,'Colombia':12,'Uruguay':13,'Switzerland':14,'Mexico':15,'USA':16,'Japan':17,'Senegal':18,'Iran':19,'South Korea':20,'Ecuador':21,'Austria':22,'Australia':23,'Norway':24,'Panama':25,'Egypt':26,'Algeria':27,'Scotland':28,'Paraguay':29,'Tunisia':30,"Côte d'Ivoire":31,'Uzbekistan':32,'Qatar':33,'Saudi Arabia':34,'South Africa':35,'Jordan':36,'Cabo Verde':37,'Ghana':38,'Curaçao':39,'Haiti':40,'New Zealand':41,'Czechia':42,'Türkiye':43,'DR Congo':44,'Bosnia and Herzegovina':45,'Iraq':46,'Sweden':47
+};
+
+
+const CURRENT_BEST_THIRD_PLACE_ORDER = {
+  'DR Congo':1,
+  'Sweden':2,
+  'Ghana':3,
+  'Ecuador':4,
+  'Bosnia and Herzegovina':5,
+  'Algeria':6,
+  'Paraguay':7,
+  'Senegal':8,
+  'Iran':9,
+  'South Korea':10,
+  'Scotland':11,
+  'Uruguay':12
 };
 
 const GROUPS = {
@@ -780,7 +796,15 @@ function breakTie(tied,matches){
 function groupBy(arr,key){return arr.reduce((a,x)=>{const k=x[key];(a[k]??=[]).push(x);return a;},{});}
 function rankThirds(tables){
   const thirds=Object.entries(tables).map(([g,rows])=>({...rows[2],group:g}));
-  thirds.sort((a,b)=>b.pts-a.pts || b.gd-a.gd || b.gf-a.gf || (b.conduct??0)-(a.conduct??0) || (a.rank??99)-(b.rank??99) || a.team.localeCompare(b.team));
+  thirds.sort((a,b)=>
+    b.pts-a.pts ||
+    b.gd-a.gd ||
+    b.gf-a.gf ||
+    (b.conduct??0)-(a.conduct??0) ||
+    (CURRENT_BEST_THIRD_PLACE_ORDER[a.team]??99)-(CURRENT_BEST_THIRD_PLACE_ORDER[b.team]??99) ||
+    (a.rank??99)-(b.rank??99) ||
+    a.team.localeCompare(b.team)
+  );
   return thirds;
 }
 
@@ -831,7 +855,7 @@ function renderGroups(){
 }
 function renderThirdTable(){
   const el=document.getElementById('thirdTable'); if(!computed || !el) return;
-  el.innerHTML=`<thead><tr><th>#</th><th>Group</th><th>Team</th><th>Pts</th><th>GD</th><th>GF</th><th>Conduct</th><th>Rank</th><th>Status</th></tr></thead><tbody>${computed.thirds.map((r,i)=>`<tr class="${i<8?'third-ok':''}"><td>${i+1}</td><td>${r.group}</td><td>${esc(flag(r.team))}</td><td><strong>${r.pts}</strong></td><td>${r.gd}</td><td>${r.gf}</td><td>${r.conduct??0}</td><td>${r.rank??99}</td><td>${i<8?'<span class="pill warn">Advance</span>':'Out'}</td></tr>`).join('')}</tbody>`;
+  el.innerHTML=`<thead><tr><th>#</th><th>Team</th><th>Pl</th><th>W</th><th>D</th><th>L</th><th>+/-</th><th>GD</th><th>Pts</th><th>Status</th></tr></thead><tbody>${computed.thirds.map((r,i)=>`<tr class="${i<8?'third-ok':''}"><td>${i+1}</td><td>${esc(flag(r.team))}</td><td>${r.mp}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td>${r.gf}-${r.ga}</td><td>${r.gd>0?'+'+r.gd:r.gd}</td><td><strong>${r.pts}</strong></td><td>${i<8?'<span class="pill warn">Advance</span>':'Out'}</td></tr>`).join('')}</tbody>`;
 }
 function renderSummary(){
   const el=document.getElementById('summary'); if(!computed || !el) return;
