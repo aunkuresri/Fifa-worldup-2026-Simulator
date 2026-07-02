@@ -23,7 +23,7 @@
     .fixtures{display:grid;grid-template-columns:repeat(3,minmax(300px,1fr));gap:14px}@media(max-width:1200px){.fixtures{grid-template-columns:repeat(2,minmax(300px,1fr))}}@media(max-width:780px){.fixtures{grid-template-columns:1fr}}
     .fixture{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.035);padding:12px}.fixture-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.teamscore{display:grid;grid-template-columns:1fr 68px 26px 68px 1fr;gap:8px;align-items:center}.team{text-align:center;font-weight:700}.teamscore input{width:68px;text-align:center;background:#0c1426;border:1px solid #2b416d;color:var(--text);border-radius:10px;padding:9px 6px}.vs{text-align:center;color:var(--muted);font-size:12px}.date{font-size:11px;color:var(--muted)}
     .third-table{max-height:540px;overflow:auto}.note{border:1px dashed #406390;border-radius:14px;padding:12px;color:#cfe0ff;background:rgba(77,163,255,.08);font-size:13px;line-height:1.45}.warnbox{border-color:#8e6e24;background:rgba(255,204,102,.09);color:#ffe5a6}.errorbox{border-color:#8a3742;background:rgba(255,111,111,.09);color:#ffcccc}
-    .bracket{overflow-x:visible;padding-bottom:8px;width:100%}.knockout-layout{width:100%;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) clamp(180px,15vw,240px) minmax(0,1fr);gap:10px;align-items:center}.bracket-side{min-width:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;align-items:center}.bracket-column{min-width:0;display:grid;gap:10px;align-content:center}.bracket-column.r32{gap:7px}.bracket-column.r16{gap:18px}.bracket-column.qf{gap:46px}.bracket-column.sf{gap:96px}.side-label{grid-column:1/-1;text-align:center;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:#cfe0ff;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:12px;padding:8px;font-size:clamp(10px,.8vw,12px)}.round-title{font-weight:800;color:#dce7ff;font-size:clamp(10px,.8vw,12px);background:rgba(11,16,32,.9);padding:7px 6px;border-radius:10px;border:1px solid var(--line);z-index:2;text-align:center;white-space:normal}.center-stage{min-width:0;display:grid;gap:12px;align-content:center}.center-stage .round-title{background:linear-gradient(180deg,#244d80,#17365f);border-color:#4da3ff}.match{min-width:0;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.035);overflow:hidden}.match-title{display:flex;justify-content:space-between;gap:6px;padding:8px 8px;border-bottom:1px solid rgba(255,255,255,.07);font-size:clamp(9px,.72vw,11px);color:var(--muted);line-height:1.2}.choice{display:grid;grid-template-columns:1fr;gap:6px;padding:8px}.choice button{text-align:left;background:#101a2e;box-shadow:none;padding:8px 7px;font-size:clamp(10px,.75vw,12px);line-height:1.2;white-space:normal;overflow-wrap:anywhere}.choice button.selected{border-color:#51cc83;background:#123225;color:#c9ffd9}.choice button.loser{opacity:.5}.placeholder{color:#7488b1;font-style:italic}.champion{font-size:30px;font-weight:900;letter-spacing:-.02em}.champion-card{text-align:center;background:linear-gradient(180deg,rgba(32,93,57,.95),rgba(13,43,31,.95));border-color:#50c27b}@media(max-width:1180px){.knockout-layout{grid-template-columns:1fr;align-items:stretch}.center-stage{order:3;max-width:520px;width:100%;margin:0 auto}.right-side{order:2}.left-side{order:1}.bracket-column.r32,.bracket-column.r16,.bracket-column.qf,.bracket-column.sf{gap:10px}.choice button{font-size:12px}.match-title{font-size:11px}}@media(max-width:720px){.bracket-side{grid-template-columns:repeat(2,minmax(0,1fr))}.side-label{grid-column:1/-1}.round-title{font-size:11px}.match-title{font-size:10px}.choice button{font-size:11px;padding:7px 6px}}
+    .bracket{overflow-x:visible;padding-bottom:8px;width:100%}.knockout-layout{width:100%;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) clamp(180px,15vw,240px) minmax(0,1fr);gap:10px;align-items:center}.bracket-side{min-width:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;align-items:center}.bracket-column{min-width:0;display:grid;gap:10px;align-content:center}.bracket-column.r32{gap:7px}.bracket-column.r16{gap:18px}.bracket-column.qf{gap:46px}.bracket-column.sf{gap:96px}.side-label{grid-column:1/-1;text-align:center;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:#cfe0ff;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:12px;padding:8px;font-size:clamp(10px,.8vw,12px)}.round-title{font-weight:800;color:#dce7ff;font-size:clamp(10px,.8vw,12px);background:rgba(11,16,32,.9);padding:7px 6px;border-radius:10px;border:1px solid var(--line);z-index:2;text-align:center;white-space:normal}.center-stage{min-width:0;display:grid;gap:12px;align-content:center}.center-stage .round-title{background:linear-gradient(180deg,#244d80,#17365f);border-color:#4da3ff}.match{min-width:0;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.035);overflow:hidden}.match-title{display:grid;gap:4px;padding:8px 8px;border-bottom:1px solid rgba(255,255,255,.07);font-size:clamp(9px,.72vw,11px);color:var(--muted);line-height:1.25}.match-label{font-weight:800;color:#dce7ff}.match-meta{display:grid;gap:2px;color:#aebfe3}.match-meta span{display:block}.bdt-time{color:#b9f6ca;font-weight:800}.match-venue{color:#8fa2c7}.choice{display:grid;grid-template-columns:1fr;gap:6px;padding:8px}.choice button{text-align:left;background:#101a2e;box-shadow:none;padding:8px 7px;font-size:clamp(10px,.75vw,12px);line-height:1.2;white-space:normal;overflow-wrap:anywhere}.choice button.selected{border-color:#51cc83;background:#123225;color:#c9ffd9}.choice button.loser{opacity:.5}.placeholder{color:#7488b1;font-style:italic}.champion{font-size:30px;font-weight:900;letter-spacing:-.02em}.champion-card{text-align:center;background:linear-gradient(180deg,rgba(32,93,57,.95),rgba(13,43,31,.95));border-color:#50c27b}@media(max-width:1180px){.knockout-layout{grid-template-columns:1fr;align-items:stretch}.center-stage{order:3;max-width:520px;width:100%;margin:0 auto}.right-side{order:2}.left-side{order:1}.bracket-column.r32,.bracket-column.r16,.bracket-column.qf,.bracket-column.sf{gap:10px}.choice button{font-size:12px}.match-title{font-size:11px}}@media(max-width:720px){.bracket-side{grid-template-columns:repeat(2,minmax(0,1fr))}.side-label{grid-column:1/-1}.round-title{font-size:11px}.match-title{font-size:10px}.choice button{font-size:11px;padding:7px 6px}}
     .records{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:1000px){.records{grid-template-columns:1fr}}.record-list{max-height:560px;overflow:auto;display:grid;gap:10px}.record{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.035);padding:12px}.record strong{display:block;margin-bottom:4px}.logline{font-family:Consolas,monospace;font-size:12px;color:#dbe6ff;background:#0a1222;border:1px solid #1d2e4e;border-radius:10px;padding:8px;white-space:pre-wrap}
     .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:900px){.two-col{grid-template-columns:1fr}}.fieldgrid{display:grid;grid-template-columns:repeat(3,minmax(120px,1fr));gap:10px}.fieldgrid label{font-size:12px;color:var(--muted);display:grid;gap:5px}.fieldgrid input{background:#0c1426;border:1px solid #2b416d;color:var(--text);border-radius:10px;padding:9px 8px;width:100%}
     .hidden{display:none!important}.right{margin-left:auto}.footer{color:var(--muted);font-size:12px;margin:24px 0 8px;line-height:1.5}.kbd{font-family:Consolas,monospace;background:#0a1222;border:1px solid #2b416d;border-radius:6px;padding:1px 5px;color:#dbe6ff}.search{background:#0c1426;border:1px solid #2b416d;color:var(--text);border-radius:12px;padding:10px 12px;min-width:260px}.matrix-status{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.web-sync-panel{border:1px solid #315b8e;background:rgba(77,163,255,.07);border-radius:14px;padding:12px}.web-sync-status{font-size:12px;color:#cfe0ff;line-height:1.45;margin-top:8px}.web-sync-status.error{color:#ffcccc}.web-sync-status.ok{color:#b9f6ca}.web-sync-status.warn{color:#ffe39b}.json-import-panel{border:1px solid #4e638a;background:rgba(255,255,255,.04);border-radius:14px;padding:12px}.json-import-panel textarea{width:100%;min-height:130px;resize:vertical;background:#0c1426;border:1px solid #2b416d;color:var(--text);border-radius:12px;padding:10px 12px;font-family:Consolas,monospace;font-size:12px;line-height:1.4;margin-top:10px}.json-import-status{font-size:12px;color:#cfe0ff;line-height:1.45;margin-top:8px}.json-import-status.error{color:#ffcccc}.json-import-status.ok{color:#b9f6ca}.json-import-status.warn{color:#ffe39b}.mode-panel{border:1px solid #2e69ad;background:rgba(77,163,255,.08);border-radius:14px;padding:12px}.fixture.locked input{opacity:.75;cursor:not-allowed;background:#101827;border-color:#334155}.manual-only.hidden-control{display:none!important}
@@ -35,7 +35,7 @@
       <div class="topbar">
         <div>
           <h1>FIFA World Cup 2026 Simulator</h1>
-          <p class="subtitle">Current group tables are loaded from the uploaded result set. Use the knockout bracket to simulate winners manually.</p>
+          <p class="subtitle">Current group tables are loaded from the uploaded result set. Knockout match dates, times, and venues are shown in Bangladesh time (BDT). Use the bracket to simulate winners manually.</p>
         </div>
         <div class="actions">
           <button class="danger" id="btnResetKnockoutTop">Reset Knockout</button>
@@ -64,7 +64,7 @@
     <section id="tab-knockout" class="tabpane hidden">
       <div class="grid" style="gap:16px">
         <div class="card champion-card hidden" id="championCard"><div class="bd"><div class="small">Projected Champion</div><div class="champion" id="championName"></div></div></div>
-        <div class="card"><div class="hd"><h2>Knockout Bracket</h2><div class="actions"><span class="pill" id="bracketStatus">Waiting for current results</span><button class="danger" id="btnResetKnockoutBracket" type="button">Reset Knockout</button></div></div><div class="bd"><div id="bracket" class="bracket"></div></div></div>
+        <div class="card"><div class="hd"><h2>Knockout Bracket</h2><div class="actions"><span class="pill blue">Bangladesh time</span><span class="pill" id="bracketStatus">Waiting for current results</span><button class="danger" id="btnResetKnockoutBracket" type="button">Reset Knockout</button></div></div><div class="bd"><div id="bracket" class="bracket"></div></div></div>
       </div>
     </section>
 
@@ -82,7 +82,7 @@ const LOG_KEY = 'wc2026_simulator_log_v1';
 const MATRIX_KEY = 'wc2026_annex_c_matrix_v1';
 const WEB_RESULTS_SOURCE = 'ESPN scoreboard JSON';
 const WEB_SCOREBOARD_RANGE_URL = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260719&limit=250&groups=100';
-const CURRENT_RESULTS_VERSION = 'uploaded-2026-06-28-best-third-ranking-v3-bracket-fixed';
+const CURRENT_RESULTS_VERSION = 'uploaded-2026-06-28-best-third-ranking-v4-bdt-knockout-schedule';
 
 const FLAGS = {
   'Mexico':'🇲🇽','South Korea':'🇰🇷','Czechia':'🇨🇿','South Africa':'🇿🇦','Canada':'🇨🇦','Switzerland':'🇨🇭','Bosnia and Herzegovina':'🇧🇦','Qatar':'🇶🇦','Brazil':'🇧🇷','Morocco':'🇲🇦','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Haiti':'🇭🇹','USA':'🇺🇸','Australia':'🇦🇺','Paraguay':'🇵🇾','Türkiye':'🇹🇷','Germany':'🇩🇪',"Côte d'Ivoire":'🇨🇮','Ecuador':'🇪🇨','Curaçao':'🇨🇼','Netherlands':'🇳🇱','Japan':'🇯🇵','Sweden':'🇸🇪','Tunisia':'🇹🇳','Egypt':'🇪🇬','Iran':'🇮🇷','Belgium':'🇧🇪','New Zealand':'🇳🇿','Spain':'🇪🇸','Uruguay':'🇺🇾','Cabo Verde':'🇨🇻','Saudi Arabia':'🇸🇦','France':'🇫🇷','Norway':'🇳🇴','Senegal':'🇸🇳','Iraq':'🇮🇶','Argentina':'🇦🇷','Austria':'🇦🇹','Algeria':'🇩🇿','Jordan':'🇯🇴','Colombia':'🇨🇴','Portugal':'🇵🇹','DR Congo':'🇨🇩','Uzbekistan':'🇺🇿','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Ghana':'🇬🇭','Croatia':'🇭🇷','Panama':'🇵🇦'
@@ -202,23 +202,58 @@ const CURRENT_THIRD_SLOT_ASSIGNMENTS = {
 };
 
 const ROUND_OF_32 = [
-  {m:73, label:'R32 M73', left:'2A', right:'2B', meta:'28 Jun · Inglewood'},
-  {m:74, label:'R32 M74', left:'1E', right:'3?', thirdWinner:'E', meta:'29 Jun · Foxborough'},
-  {m:75, label:'R32 M75', left:'1F', right:'2C', meta:'29 Jun · Guadalupe'},
-  {m:76, label:'R32 M76', left:'1C', right:'2F', meta:'29 Jun · Houston'},
-  {m:77, label:'R32 M77', left:'1I', right:'3?', thirdWinner:'I', meta:'30 Jun · East Rutherford'},
-  {m:78, label:'R32 M78', left:'2E', right:'2I', meta:'30 Jun · Arlington'},
-  {m:79, label:'R32 M79', left:'1A', right:'3?', thirdWinner:'A', meta:'30 Jun · Mexico City'},
-  {m:80, label:'R32 M80', left:'1L', right:'3?', thirdWinner:'L', meta:'1 Jul · Atlanta'},
-  {m:81, label:'R32 M81', left:'1D', right:'3?', thirdWinner:'D', meta:'1 Jul · Santa Clara'},
-  {m:82, label:'R32 M82', left:'1G', right:'3?', thirdWinner:'G', meta:'1 Jul · Seattle'},
-  {m:83, label:'R32 M83', left:'2K', right:'2L', meta:'2 Jul · Toronto'},
-  {m:84, label:'R32 M84', left:'1H', right:'2J', meta:'2 Jul · Inglewood'},
-  {m:85, label:'R32 M85', left:'1B', right:'3?', thirdWinner:'B', meta:'2 Jul · Vancouver'},
-  {m:86, label:'R32 M86', left:'1J', right:'2H', meta:'3 Jul · Miami'},
-  {m:87, label:'R32 M87', left:'1K', right:'3?', thirdWinner:'K', meta:'3 Jul · Kansas City'},
-  {m:88, label:'R32 M88', left:'2D', right:'2G', meta:'3 Jul · Arlington'}
+  {m:73, label:'R32 M73', left:'2A', right:'2B'},
+  {m:74, label:'R32 M74', left:'1E', right:'3?', thirdWinner:'E'},
+  {m:75, label:'R32 M75', left:'1F', right:'2C'},
+  {m:76, label:'R32 M76', left:'1C', right:'2F'},
+  {m:77, label:'R32 M77', left:'1I', right:'3?', thirdWinner:'I'},
+  {m:78, label:'R32 M78', left:'2E', right:'2I'},
+  {m:79, label:'R32 M79', left:'1A', right:'3?', thirdWinner:'A'},
+  {m:80, label:'R32 M80', left:'1L', right:'3?', thirdWinner:'L'},
+  {m:81, label:'R32 M81', left:'1D', right:'3?', thirdWinner:'D'},
+  {m:82, label:'R32 M82', left:'1G', right:'3?', thirdWinner:'G'},
+  {m:83, label:'R32 M83', left:'2K', right:'2L'},
+  {m:84, label:'R32 M84', left:'1H', right:'2J'},
+  {m:85, label:'R32 M85', left:'1B', right:'3?', thirdWinner:'B'},
+  {m:86, label:'R32 M86', left:'1J', right:'2H'},
+  {m:87, label:'R32 M87', left:'1K', right:'3?', thirdWinner:'K'},
+  {m:88, label:'R32 M88', left:'2D', right:'2G'}
 ];
+
+const KNOCKOUT_SCHEDULE = {
+  73:{bdt:'29 Jun, 1:00 AM BDT', venue:'Los Angeles Stadium'},
+  74:{bdt:'30 Jun, 2:30 AM BDT', venue:'Boston Stadium'},
+  75:{bdt:'30 Jun, 7:00 AM BDT', venue:'Monterrey Stadium'},
+  76:{bdt:'29 Jun, 11:00 PM BDT', venue:'Houston Stadium'},
+  77:{bdt:'1 Jul, 3:00 AM BDT', venue:'New York New Jersey Stadium'},
+  78:{bdt:'30 Jun, 11:00 PM BDT', venue:'Dallas Stadium'},
+  79:{bdt:'1 Jul, 7:00 AM BDT', venue:'Mexico City Stadium'},
+  80:{bdt:'1 Jul, 10:00 PM BDT', venue:'Atlanta Stadium'},
+  81:{bdt:'2 Jul, 6:00 AM BDT', venue:'San Francisco Bay Area Stadium'},
+  82:{bdt:'2 Jul, 2:00 AM BDT', venue:'Seattle Stadium'},
+  83:{bdt:'3 Jul, 5:00 AM BDT', venue:'Toronto Stadium'},
+  84:{bdt:'3 Jul, 1:00 AM BDT', venue:'Los Angeles Stadium'},
+  85:{bdt:'3 Jul, 9:00 AM BDT', venue:'BC Place Vancouver'},
+  86:{bdt:'4 Jul, 4:00 AM BDT', venue:'Miami Stadium'},
+  87:{bdt:'4 Jul, 7:30 AM BDT', venue:'Kansas City Stadium'},
+  88:{bdt:'4 Jul, 12:00 AM BDT', venue:'Dallas Stadium'},
+  89:{bdt:'5 Jul, 3:00 AM BDT', venue:'Philadelphia Stadium'},
+  90:{bdt:'4 Jul, 11:00 PM BDT', venue:'Houston Stadium'},
+  91:{bdt:'6 Jul, 2:00 AM BDT', venue:'New York New Jersey Stadium'},
+  92:{bdt:'6 Jul, 6:00 AM BDT', venue:'Mexico City Stadium'},
+  93:{bdt:'7 Jul, 1:00 AM BDT', venue:'Dallas Stadium'},
+  94:{bdt:'7 Jul, 6:00 AM BDT', venue:'Seattle Stadium'},
+  95:{bdt:'7 Jul, 10:00 PM BDT', venue:'Atlanta Stadium'},
+  96:{bdt:'8 Jul, 2:00 AM BDT', venue:'BC Place Vancouver'},
+  97:{bdt:'10 Jul, 2:00 AM BDT', venue:'Boston Stadium'},
+  98:{bdt:'11 Jul, 1:00 AM BDT', venue:'Los Angeles Stadium'},
+  99:{bdt:'12 Jul, 3:00 AM BDT', venue:'Miami Stadium'},
+  100:{bdt:'12 Jul, 7:00 AM BDT', venue:'Kansas City Stadium'},
+  101:{bdt:'15 Jul, 1:00 AM BDT', venue:'Dallas Stadium'},
+  102:{bdt:'16 Jul, 1:00 AM BDT', venue:'Atlanta Stadium'},
+  103:{bdt:'19 Jul, 3:00 AM BDT', venue:'Miami Stadium'},
+  104:{bdt:'20 Jul, 1:00 AM BDT', venue:'New York New Jersey Stadium'}
+};
 
 const NEXT_ROUNDS = [
   {name:'Round of 16', matches:[{m:89,l:73,r:75},{m:90,l:74,r:77},{m:91,l:76,r:78},{m:92,l:79,r:80},{m:93,l:83,r:84},{m:94,l:81,r:82},{m:95,l:86,r:88},{m:96,l:85,r:87}]},
@@ -906,8 +941,8 @@ function renderBracket(){
   status.textContent=computed.thirdMap.exact?'Annex C exact bracket':'Fallback bracket'; status.className='pill '+(computed.thirdMap.exact?'green':'warn');
 
   const matchMap={};
-  ROUND_OF_32.forEach(x=>{matchMap[x.m]={m:x.m,label:x.label,meta:x.meta,left:resolveR32Side(x,'left'),right:resolveR32Side(x,'right')};});
-  NEXT_ROUNDS.forEach(r=>r.matches.forEach(x=>{matchMap[x.m]={m:x.m,label:(r.name==='Final'?'Final M':'M')+x.m,meta:'',left:resolveRef(x.l),right:resolveRef(x.r)};}));
+  ROUND_OF_32.forEach(x=>{matchMap[x.m]={m:x.m,label:x.label,meta:KNOCKOUT_SCHEDULE[x.m],left:resolveR32Side(x,'left'),right:resolveR32Side(x,'right')};});
+  NEXT_ROUNDS.forEach(r=>r.matches.forEach(x=>{matchMap[x.m]={m:x.m,label:(r.name==='Final'?'Final M':'M')+x.m,meta:KNOCKOUT_SCHEDULE[x.m],left:resolveRef(x.l),right:resolveRef(x.r)};}));
 
   const col=(title,ids,extraClass='')=>`<div class="bracket-column ${extraClass}"><div class="round-title">${title}</div>${ids.map(id=>matchCard(matchMap[id])).join('')}</div>`;
 
@@ -944,7 +979,11 @@ function renderBracket(){
 }
 function matchCard(mt){
   const w=getWinner(mt.m); const ready=mt.left&&mt.right;
-  return `<div class="match"><div class="match-title"><span>${esc(mt.label||('M'+mt.m))}</span><span>${esc(mt.meta||'')}</span></div><div class="choice">${teamButton(mt.m,mt.left,w,ready)}${teamButton(mt.m,mt.right,w,ready)}</div></div>`;
+  const meta = mt.meta || {};
+  const metaHTML = meta.bdt
+    ? `<div class="match-meta"><span class="bdt-time">${esc(meta.bdt)}</span><span class="match-venue">${esc(meta.venue || '')}</span></div>`
+    : '';
+  return `<div class="match"><div class="match-title"><span class="match-label">${esc(mt.label||('M'+mt.m))}</span>${metaHTML}</div><div class="choice">${teamButton(mt.m,mt.left,w,ready)}${teamButton(mt.m,mt.right,w,ready)}</div></div>`;
 }
 function teamButton(m,t,w,ready){
   if(!t) return `<button disabled><span class="placeholder">Waiting for previous winner</span></button>`;
